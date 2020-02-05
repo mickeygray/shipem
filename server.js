@@ -13,7 +13,7 @@ app.use(express.json({ extended: false }));
 // Define Routes
 app.use('/api/users', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));
-app.use('/api/liens', require('./routes/contacts'));
+app.use('/api/liens', require('./routes/liens'));
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
