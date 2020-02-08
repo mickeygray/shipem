@@ -1,6 +1,6 @@
 import {
     POST_LEAD,
-    SET_LEAD
+    GET_CALL
   } from '../types';
 
   export default (state,action) => {
@@ -10,11 +10,12 @@ import {
             ...state,
             lead: action.payload
         };
-        case SET_LEAD:
+        case GET_CALL:
           return {
-            ...state,
-            lead: action.payload
-          };
+              ...state,
+              number: action.payload
+          }; 
+
       default: 
        return state;
 

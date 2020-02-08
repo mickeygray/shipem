@@ -1,8 +1,6 @@
 import {
     GET_CALLS,
-    GET_CALL,
-    SET_NUMBER,
-    CLEAR_NUMBER
+    SEND_CALL
   } from '../types';
 
   export default (state,action) => {
@@ -12,16 +10,10 @@ import {
             ...state,
             calls: action.payload
         };
-      case GET_CALL:
+      case SEND_CALL:
         return {
           ...state,
-          id: action.payload
-        } 
-
-      case CLEAR_NUMBER:
-        return {
-          ...state,
-          number: null
+          call: action.payload
         };  
       default: 
        return state;

@@ -1,35 +1,63 @@
-
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import LeadContext from '../../context/Lead/leadContext';
+
+
 
 
 
 const LeadForm = () => {
 
+  const leadContext = useContext(LeadContext);
+  
+  const { addLead } = leadContext;
+
+  const [ number, setNumber ] = useState('');
+useEffect (()=>{
+  
+  const { getCall } = leadContext
+ 
+  if(getCall){
+    const { number } = leadContext
+    setNumber(number);
+
+  }else {
+    setNumber('')
+  }
+},[number, leadContext]);
 
 
-
-
-const [ lead, setLead ] = useState({
+  const [ lead, setLead ] = useState({
     name: '',
-    address: '',
-    phone: '', 
     email:'',
-    lexId:'',
-    compliant:'compliant',
-    filingStatus:'m',
-    cpa:'cpa'
-})
+    lexid:'',
+    address:'',
+    compliant: 'compliant',
+    filingStatus: 'm',
+    cpa: 'cpa'
+  })
 
-const { name , phone, email, lexId, address, compliant, filingStatus, cpa } = lead
+ 
+   
+
+    
+const { name , email, lexId, address, compliant, filingStatus, cpa } = lead 
+
+
+
+
 const onChange = e => {
-setLead({ ...lead, [e.target.name]: e.target.value });
-
+setLead({...lead, [e.target.name]: e.target.value });
+setNumber({...number, [e.target.name]: e.target.value });
 
 };
 
+const onSubmit = e => {
+  addLead();
+};
+
   return (
-    <form >
+    
+    <form onSubmit={onSubmit} >
       <h2 className='text-primary text-center'>
         Update Information 
       </h2>
@@ -55,7 +83,7 @@ setLead({ ...lead, [e.target.name]: e.target.value });
         type='text'
         placeholder='Phone Number'
         name='phone'
-        value={phone}
+        value={number}
         onChange={onChange}
       />
 
@@ -70,7 +98,7 @@ setLead({ ...lead, [e.target.name]: e.target.value });
     <input
         type='text'
         placeholder='Lex Id'
-        name='lexId'
+        name='lexid'
         value={lexId}
         onChange={onChange}
       />
@@ -130,13 +158,13 @@ setLead({ ...lead, [e.target.name]: e.target.value });
         checked={cpa === 'nocpa'}
         onChange={onChange}
       />NO CPA{' '}
-   
       
       <div>
         <input
           type='submit'
           className='btn btn-primary btn-block'
           value='Ship Em!'
+        
         />
       </div>
       <div>

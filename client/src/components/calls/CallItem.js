@@ -1,19 +1,26 @@
 import React, { useContext } from 'react';
 import CallContext from '../../context/call/callContext';
+import LeadContext from '../../context/Lead/leadContext';
 
 
 
-const CallItem = ({call:{answered, customer_city, customer_name, customer_phone_number, customer_state, id }}) => {
-      
+const CallItem = ({call:{answered, customer_city, customer_name, customer_phone_number, customer_state, start_time, id, tracking_phone_number }}) => {
+       
+       const call = {answered, customer_city, customer_name, customer_phone_number, customer_state, start_time, id, tracking_phone_number };
 
-       const { getCall, setNumber, currentNumber } = useContext(CallContext);
-    
+       const { sendCall } = useContext(CallContext);
+       const { getCall, number } = useContext(LeadContext);
+       const onClick = e => {
+           sendCall(call);
+           getCall(number);
+       }
+
 
         
         return (
         <div className="card text-center">
                 
-                <h3>{answered ? 'Answered' : 'New Call'} </h3>
+                <h3>{answered ? `Answered at ${start_time}` : 'New Call'} </h3>
                 <p><strong>{customer_name}</strong></p>
                 <ul>
                     <li>{customer_city}</li>
@@ -21,12 +28,15 @@ const CallItem = ({call:{answered, customer_city, customer_name, customer_phone_
                     <li>{customer_phone_number}</li>
                 </ul>
             <div>
+
             <input
           type='submit'
-          value= 'This is my call'
+          value= 'This is my Call'
           className='btn btn-dark btn-sm'
-          onClick = {  () => getCall(id) }
+          onClick = {onClick}
         />
+
+
 
             </div>
         </div>

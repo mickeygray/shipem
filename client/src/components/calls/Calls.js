@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import CallItem from './CallItem';
 import CallContext from '../../context/call/callContext';
 import useRecursiveTimeout from '../../utils/useRecursiveTimeout';
@@ -11,14 +11,10 @@ const Calls = () => {
 
   
 
-  useRecursiveTimeout(
-    () =>
-      new Promise(r => {
-        getCalls(calls);
-        r();
-      }),
-    7000
-  );
+  useRecursiveTimeout( async () => {
+    await getCalls(calls);
+  },7000);
+
 
 
 
