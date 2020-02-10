@@ -37,8 +37,8 @@ const Navbar = ({ title }) => {
 
 	return (
 		<div className='navbar bg-primary'>
-			<h2>
-				{title}
+			<h2 >
+			<span className='text-dark'>Ship</span><span className='text-danger lead'>'Em</span>	
 			</h2>
 			<ul>{isAuthenticated ? authLinks : guestLinks}</ul>
 		</div>

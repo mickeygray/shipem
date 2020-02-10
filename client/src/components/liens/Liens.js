@@ -1,18 +1,20 @@
+
 import React, { useContext, useEffect  } from 'react';
 import LienItem from './LienItem';
-import LienContext from '../../context/contact/lienContext';
+import LeadContext from '../../context/Lead/leadContext';
 
 const Liens = () => {
   
-  const lienContext = useContext(LienContext);
+  const leadContext = useContext(LeadContext);
 
-  const { liens, searchLiens } = lienContext;
+  const { liens, searchLiens } = leadContext;
 
   useEffect(() => {
-    
-   }, [lienContext, searchLiens]);
+
+   }, [leadContext, searchLiens]);
+
   return (
-    <div>
+    <div className='sidebar'>
       {liens.map((lien => <LienItem key={lien._id} lien={lien}/>))}
     </div>
   );

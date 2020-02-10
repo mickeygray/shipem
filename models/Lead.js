@@ -9,25 +9,50 @@ const LeadSchema = mongoose.Schema({
         type: String
     },
     phone:{
-        type: String,
-        required: true,
-        unique: true
+        type: String
     },
     email: {
         type: String
     },
-    lexid:{
+    lexId:{
         type: String
     },
     compliant:{
-        default: 'non-compliant'
+        type: String
     }, 
     filingStatus: {
-        default: 'single'
+        Type: String
     }, 
     cpa: {
-        default: 'no-cpa'
-    }
+       Type: String
+    },
+    city:{ 
+        type: String
+    },
+    state:{
+        type: String,
+    },
+    zip: {
+        type: String
+    },
+    plaintiff: {
+        type:String
+    },
+    amount:{
+        type:String
+    },
+    lienid:{
+        type:String
+    },
+    callid:{
+        type:String
+    },
+    ssn:{
+        type:String
+    },
+    notes:{
+        type:String
+    }         
 
 });
 

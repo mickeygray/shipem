@@ -1,6 +1,8 @@
 import {
     GET_CALLS,
-    SEND_CALL
+    SEND_CALL,
+    FILTER_CALLS,
+    CLEAR_FILTER
   } from '../types';
 
   export default (state,action) => {
@@ -14,7 +16,20 @@ import {
         return {
           ...state,
           call: action.payload
-        };  
+        };
+      case FILTER_CALLS:
+          return {
+            ...state,
+            filtered: state.calls.filter(call => {
+              const regex = new RegExp(`${action.payload}`, 'gi');
+              return call.customer_phone_number.match(regex) 
+            })
+          };
+      case CLEAR_FILTER:
+          return {
+            ...state,
+            filtered: null
+          };    
       default: 
        return state;
 

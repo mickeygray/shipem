@@ -7,7 +7,7 @@ const Calls = () => {
   
   const callContext = useContext(CallContext);
 
-  const { calls, getCalls } = callContext;
+  const { calls, getCalls, filtered } = callContext;
 
   
 
@@ -19,10 +19,11 @@ const Calls = () => {
 
 
   return (
-    <div>
-    {calls.map(call => (
-      <CallItem key={call.id} call={call} />
-    ))}
+
+
+    <div className='sidebar' >
+    {filtered !== null ? filtered.map(call => (<CallItem key={call.id} call={call}/>)) : calls.map(call => (
+       <CallItem key={call.id} call={call} /> ))}
   </div>
   );
   }

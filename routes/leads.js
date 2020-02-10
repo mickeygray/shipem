@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
 const Call = require('../models/Call.js');
+const Lead = require('../models/Lead.js');
 const axios = require ('axios');
 
 
@@ -10,26 +11,30 @@ const axios = require ('axios');
 router.post( '/calls', auth, async (req,res,next) => {
   
  
-   const {  customer_name, customer_phone_number, customer_state, id, start_time, tracking_phone_number } = req.body;
+   const { answered, first_call, formatted_customer_name, total_calls, source_name, callid, formatted_customer_phone_number,  customer_city, customer_name, customer_phone_number, customer_state, start_time, id, tracking_phone_number } = req.body;
 
-      const callid = id
-
+   
+      
       try {
         const newCall = new Call({
+          answered,
+          first_call,
+          formatted_customer_name,
+          total_calls,
+          source_name,
+          formatted_customer_phone_number,
           customer_name,
-          customer_phone_number,
           customer_state,
           callid,
           tracking_phone_number,
-          start_time
-          
+          start_time    
         });
   
        const call = await newCall.save();
        
        res.json(call);
        next(call);
-       console.log('call posted');
+    
     
        
       } catch (err) {
@@ -46,34 +51,52 @@ router.post( '/calls', auth, async (req,res,next) => {
 
       
       res.json(call);
-      console.log(call);
+
    })
 
-  
-  router.post( '/leads',auth, async (req, res ) => {
+   router.get ('/', auth, async (req,res,next) => {
+    const lead = await Lead.find().limit(1).sort({$natural:-1})
     
-    const { name , phone, email, lexId, address, compliant, filingStatus, cpa } = req.body;
 
-    try {
-      const newLead = new Lead({
-        name,
-        phone,
-        email,
-        lexId,
-        address,
-        compliant,
-        filingStatus,
-        cpa
-      });
+    
+    res.json(lead);
+  
+ })
 
-      const lead = await newLead.save();
 
-      res.json(lead);
-      
-    } catch (err) {
-      console.error(er.message);
-      res.status(500).send('Server Error');
-    }
+  
+router.post( '/',auth, async (req,res) => {
+    
+ const { name, address, city, state, zip, plaintiff, amount, lienid } = req.body.record
+ const { phone, callid } = req.body.call
+ const { email, lexId, compliant, filingStatus, cpa, ssn } = req.body.open
+ const { notes } = req.body.notes  
+
+
+  const newLead = new Lead({
+    name,
+    address,
+    city,
+    state,
+    zip,
+    plaintiff,
+    amount,
+    lienid,
+    callid,
+    phone,
+    email,
+    lexId,
+    compliant,
+    filingStatus,
+    cpa,
+    ssn,
+    notes
+  });
+
+ const lead = await newLead.save();
+ 
+ res.json(lead);
+
   }
 );
 

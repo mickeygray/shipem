@@ -1,10 +1,11 @@
-import React, { useState, useContext } from 'react';
-import LienContext from '../../context/contact/lienContext';
+import React, { useContext, useState } from 'react';
+import LeadContext from '../../context/Lead/leadContext';
 import AlertContext from '../../context/alert/alertContext';
 
 const Search = () => {
-  const lienContext = useContext(LienContext);
+  const leadContext = useContext(LeadContext);
   const alertContext = useContext(AlertContext);
+  
 
   const [text, setText] = useState('');
 
@@ -13,7 +14,7 @@ const Search = () => {
     if (text === '') {
       alertContext.setAlert('Please enter something', 'light');
     } else {
-      lienContext.searchLiens(text);
+      leadContext.searchLiens(text);
       setText('');
     }
   };

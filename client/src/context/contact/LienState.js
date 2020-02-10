@@ -4,7 +4,8 @@ import LienContext from './lienContext';
 import LienReducer from './lienReducer';
 import {
   SEARCH_LIENS,
-  SET_CURRENT
+  CLEAR_LIENS,
+  DELETE_LIEN
 } from '../types';
 
 const LienState = props => {
@@ -27,22 +28,38 @@ const LienState = props => {
 
 };
 
+  // Delete Contact
+  const deleteLien = async id => {
+    try {
+      await axios.delete(`/api/liens/${id}`);
 
-const setCurrent = lien => {
-  dispatch({ type: SET_CURRENT, payload: lien });
-};
+      dispatch({
+        type: DELETE_LIEN,
+        payload: id
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
 
 
- 
+    // Clear Liens
+    const clearLiens = () => {
+      dispatch({ type: CLEAR_LIENS });
+    };
+  
+
 
   return (
     <LienContext.Provider
       value={{
         liens: state.liens,
         lien: state.lien,
+        current: state.current,
         searchLiens,
-        setCurrent
+        clearLiens,
+        deleteLien
 
 
       }}

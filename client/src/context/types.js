@@ -1,11 +1,4 @@
-export const GET_LIENS = 'GET_LIENS';
-export const SEARCH_LIENS = 'SEARCH_LIENS';
-export const DELETE_LIEN = 'DELETE_LIEN';
-export const ADD_LIST = 'ADD_LIST';
-export const CLEAR_LIENS = 'CLEAR_LIENS';
-export const LIEN_ERROR = 'LIEN_ERROR';
-export const SET_ALERT = 'SET_ALERT';
-export const REMOVE_ALERT = 'REMOVE_ALERT';
+//Login Types
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
 export const USER_LOADED = 'USER_LOADED';
@@ -13,16 +6,37 @@ export const AUTH_ERROR = 'AUTH_ERROR';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
-export const CLEAR_ERRORS = 'CLEAR_ERRORS';
-export const GET_CALLS = 'GET_CALLS';
-export const GET_CALL = 'GET_CALL';
-export const POST_LEAD = 'POST_LEAD';
-export const GET_LEADS = 'GET_LEADS';
-export const SET_CALL = 'SET_CALL';
-export const SET_LEAD = 'SET_LEAD';
-export const SEND_CALL = 'SEND_CALL';
-export const SAVE_CALL = 'SAVE_CALL';
-export const CLEAR_NUMBER = 'CLEAR_NUMBER';
+
+//Crud Types
+export const DELETE_LIEN = 'DELETE_LIEN';
+export const UPDATE_LIEN = 'UPDATE_LIEN';
+
 export const SET_CURRENT = 'SET_CURRENT';
+export const SEND_CALL = 'SEND_CALL';
+
+export const SEARCH_LIENS = 'SEARCH_LIENS';
+export const FILTER_CALLS = 'FILTER_CALLS';
+//Item List Gets
+export const GET_LIENS = 'GET_LIENS';
+export const GET_CALLS = 'GET_CALLS';
+
+
 export const GET_NUMBER = 'GET_NUMBER';
-export const SET_PHONE = 'SET_PHONE';
+export const GET_CALL = 'GET_CALL';
+export const GET_LEAD = 'GET_LEAD';
+
+export const CLEAR_CURRENT = 'CLEAR_CURRENT';
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+export const CLEAR_LIENS = 'CLEAR_LIENS';
+export const CLEAR_LEAD = 'CLEAR_LEAD';
+export const CLEAR_FILTER = 'CLEAR_FILTER';
+export const CLEAR_NUMBER = 'CLEAR_NUMBER';
+
+export const POST_LEAD = 'POST_LEAD';
+export const ADD_LIST = 'ADD_LIST';
+export const POST_LOGICS = 'POST_LOGICS';
+
+//error types 
+export const LIEN_ERROR = 'LIEN_ERROR';
+export const SET_ALERT = 'SET_ALERT';
+export const REMOVE_ALERT = 'REMOVE_ALERT';

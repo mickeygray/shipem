@@ -5,13 +5,15 @@ import CallReducer from './callReducer';
 import {
   GET_CALLS,
   SEND_CALL,
+  FILTER_CALLS,
+  CLEAR_FILTER
 } from '../types';
 
 const CallState = props => {
     const initialState = {
       calls: [],
       call: {},
-      number: null
+      filtered: null
     };
 
 const [state, dispatch] = useReducer(CallReducer, initialState);
@@ -23,7 +25,7 @@ const getCalls = async () => {
             
           }
       };
-      const res = await axios.get(`https://api.callrail.com/v3/a/423787543/calls.json`, config)
+      const res = await axios.get(`https://api.callrail.com/v3/a/423787543/calls.json?fields=answered,first_call,formatted_customer_name,total_calls,source_name,formatted_customer_phone_number,customer_city,customer_name,customer_phone_number,customer_state,start_time,id,tracking_phone_number`, config)
       
       dispatch({
           type: GET_CALLS,
@@ -47,8 +49,15 @@ const sendCall = async call => {
 });
 
 };
+//Filter Calls
+const filterCalls = text => {
+  dispatch({ type: FILTER_CALLS, payload: text });
+};
 
-
+// Clear Filter
+const clearFilter = () => {
+  dispatch({ type: CLEAR_FILTER });
+};
       
     
     return (
@@ -56,9 +65,11 @@ const sendCall = async call => {
           value={{
             calls: state.calls,
             call: state.call,
-            currentNumber: state.currentNumber,
+            filtered: state.filtered,
             getCalls,
-            sendCall
+            sendCall,
+            filterCalls,
+            clearFilter
 
     
     

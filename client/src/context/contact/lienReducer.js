@@ -1,6 +1,7 @@
 import {
     SEARCH_LIENS,
-    SET_CURRENT
+    CLEAR_LIENS,
+    DELETE_LIEN
   } from '../types';
 
   export default (state,action) => {
@@ -10,12 +11,21 @@ import {
                 ...state,
                 liens: action.payload
             };
-        case SET_CURRENT:
-            return {
+        case DELETE_LIEN:
+                return {
+                  ...state,
+                  liens: state.liens.filter(
+                    lien => lien._id !== action.payload
+                  )
+                };
+        case CLEAR_LIENS:
+             return {
                 ...state,
-                current: action.payload
+                liens: []                    
             };
-                 default:
-               return state;
+ 
+            default: 
+            return state;
+
       }
   }

@@ -1,67 +1,152 @@
 import React, { useContext, useEffect, useState } from 'react';
 import LeadContext from '../../context/Lead/leadContext';
+import { POST_LOGICS } from '../../context/types';
+
+
+
+
+
 
 
 
 
 
 const LeadForm = () => {
-
-  const leadContext = useContext(LeadContext);
-  
-  const { addLead } = leadContext;
-
-  const [ number, setNumber ] = useState('');
-useEffect (()=>{
-  
-  const { getCall } = leadContext
- 
-  if(getCall){
-    const { number } = leadContext
-    setNumber(number);
-
-  }else {
-    setNumber('')
-  }
-},[number, leadContext]);
-
-
-  const [ lead, setLead ] = useState({
-    name: '',
-    email:'',
-    lexid:'',
-    address:'',
-    compliant: 'compliant',
-    filingStatus: 'm',
-    cpa: 'cpa'
-  })
-
- 
    
+  const leadContext = useContext(LeadContext);
 
+
+
+  const { clearLiens, lien, setLien, number, clearNumber, addLead, postLogics } = leadContext;
+  
+  useEffect(() => {
     
-const { name , email, lexId, address, compliant, filingStatus, cpa } = lead 
+    if (lien !== null) {
+   
+      setRecord(lien);
+
+    }else {
+      setRecord({
+        name: '',
+        address:'',
+        city:'',
+        state:'',
+        zip:'',
+        plaintiff:'',
+        amount:'' 
+      });
+    }
+  }, [lien, leadContext]);
+
+  useEffect (()=>{ 
+   
+    if(number !== null){
+
+      setCall({phone:number});
+
+    }else {
+      setCall({phone:''});
+    }
+  },[number, leadContext]);
+
+  const [ record, setRecord ] = useState({
+    name: '',
+    address:'',
+    city:'',
+    state:'',
+    zip:'',
+    plaintiff:'',
+    amount:'',
+    lienid:''
+  });
+
+  const [ call, setCall ] = useState({
+        phone: '',
+        callid:''});
+  
+
+
+  const [ open, setOpen] = useState({
+       email:'',
+       lexId:'',
+       compliant:'filed',
+       filingStatus:'m',
+       cpa: 'cpa',
+       ssn:''
+  });
+
+  const [ notes, setNotes ] = useState({
+    notes: ''});
+
+
+  const { name, address, city, state, zip, plaintiff, amount, lienid } = record
+  const { phone, callid } = call
+  const { email, lexId, compliant, filingStatus, cpa, ssn } = open
+  const { noteSpace } = notes
+  const lead = {record, call, open, notes}
+
+
+  const onChange = e => {
+    setRecord({...name, address, city, state, zip, plaintiff, amount, [e.target.name]: e.target.value });
+    setCall({...phone, [e.target.name]: e.target.value });
+    setOpen({...email, lexId, compliant, filingStatus, cpa, ssn, [e.target.name]: e.target.value});
+    setNotes({...noteSpace, [e.target.name]: e.target.value });
+  }
+
+  const clearLead = () => {
+    setNotes('');
+    clearNumber();
+    setLien('');
+    setRecord({
+      name: '',
+      address:'',
+      city:'',
+      state:'',
+      zip:'',
+      plaintiff:'',
+      amount:'',
+    });
+    setCall({
+      phone: ''});
+    setOpen({
+        email:'',
+        lexId:'',
+        compliant:'filed',
+        filingStatus:'m',
+        cpa: 'cpa'
+   });  
+
+  }
+
+  const onSubmit = e => {
+      e.preventDefault();
+      addLead(lead);
+      postLogics(lead);
+      clearAll();
+    };  
+
+  const clearAll = () => {
+      clearLiens();
+      clearLead();
+    };
+
+
+  
 
 
 
-
-const onChange = e => {
-setLead({...lead, [e.target.name]: e.target.value });
-setNumber({...number, [e.target.name]: e.target.value });
-
-};
-
-const onSubmit = e => {
-  addLead();
-};
 
   return (
-    
+  
     <form onSubmit={onSubmit} >
-      <h2 className='text-primary text-center'>
-        Update Information 
+
+      <h2 className='text-danger text-center'>
+     Opener's Interview
       </h2>
 
+    <div className="container grid-2">
+    <div className="card">
+  
       <input
         type='text'
         placeholder='Name'
@@ -70,20 +155,68 @@ const onSubmit = e => {
         onChange={onChange}
       />
 
-
-    <input
+                <input
         type='text'
         placeholder='Address'
         name='address'
         value={address}
         onChange={onChange}
       />
+              <input
+        type='text'
+        placeholder='City'
+        name='city'
+        value={city}
+        onChange={onChange}
+      />
 
+      <input
+        type='text'
+        placeholder='State'
+        name='state'
+        value={state}
+        onChange={onChange}
+      />
+
+  
+          <input
+        type='text'
+        placeholder='Zip Code'
+        name='zip'
+        value={zip}
+        onChange={onChange}
+      />
+
+        
+<input
+        type='text'
+        placeholder='Plaintiff'
+        name='plaintiff'
+        value={plaintiff}
+        onChange={onChange}
+      />
+
+<input
+        type='text'
+        placeholder='Tax Debt'
+        name='amount'
+        value={amount}
+        onChange={onChange}
+      />
+      <input
+        type='text'
+        placeholder='Social Security Number'
+        name='ssn'
+        value={ssn}
+        onChange={onChange}
+      />
+</div>
+<div className="card" >
     <input
         type='text'
         placeholder='Phone Number'
         name='phone'
-        value={number}
+        value={phone}
         onChange={onChange}
       />
 
@@ -102,26 +235,25 @@ const onSubmit = e => {
         value={lexId}
         onChange={onChange}
       />
-
-<div>
+    <div>
 <h5 className ='text-center'>Compliance Status</h5>
       <input
         type='radio'
         name='compliant'
-        value='compliant'
-        checked={compliant === 'compliant'}
+        value='filed'
+        checked={compliant === 'filed'}
         onChange={onChange}
       />{' '}
-      Compliant {' '}
+      Filed {' '}
       <input
         type='radio'
         name='compliant'
-        value='noncompliant'
-        checked={compliant === 'noncompliant'}
+        value='unfiled'
+        checked={compliant === 'unfiled'}
         onChange={onChange}
       />{' '}
-      Non-Compliant
-</div>
+      Unfiled
+</div>  
 <div>
       <h5 className ='text-center'>Marital Status</h5>
       <input
@@ -141,7 +273,6 @@ const onSubmit = e => {
         onChange={onChange}
       />{' '}Single{'   '}
 </div>
-
 <h5 className ='text-center'>Tax Representation</h5>
       <input
         type='radio'
@@ -158,11 +289,22 @@ const onSubmit = e => {
         checked={cpa === 'nocpa'}
         onChange={onChange}
       />NO CPA{' '}
-      
+</div>      
+</div>  
+<div className='card all-center'>
+<textarea
+value={noteSpace}
+placeholder='notes'
+onChange={onChange}
+/></div>
+
+
+
+  
       <div>
         <input
           type='submit'
-          className='btn btn-primary btn-block'
+          className='btn btn-danger btn-block'
           value='Ship Em!'
         
         />
@@ -176,6 +318,6 @@ const onSubmit = e => {
       </div>
     </form>
   );
-};
+}
 
 export default LeadForm;

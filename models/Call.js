@@ -5,7 +5,7 @@ const CallSchema = mongoose.Schema({
 customer_name:{
     type: String
 },
-customer_phone_number:{
+formatted_customer_phone_number:{
     type: String
 },
 customer_state: {
@@ -19,7 +19,11 @@ tracking_phone_number:{
 },
 start_time: {
     type: String
+},
+source_name: {
+    type: String
 }
+
 
 });
 

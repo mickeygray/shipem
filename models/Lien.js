@@ -22,7 +22,7 @@ const LienSchema = mongoose.Schema({
 
     },
     zip: {
-        type: Number
+        type: String
 
     },
     plaintiff: {
@@ -47,13 +47,7 @@ const LienSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         isRequired: true,
     },
-    leadid: {
-        type: String
-    },
     lexid: {
-        type: String
-    },
-    contact: {
         type: String
     }
 
