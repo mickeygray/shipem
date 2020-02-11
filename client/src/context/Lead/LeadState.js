@@ -1,12 +1,15 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useContext } from 'react';
 import LeadContext from './leadContext';
 import LeadReducer from './leadReducer';
 import axios from 'axios';
+import AuthContext from '../auth/authContext';
+import setAuthToken from '../../utils/setAuthToken'
 
 
 import {
   GET_CALL,
   GET_LEAD,
+  GET_LEADS,
   SEARCH_LIENS,
   DELETE_LIEN,
   CLEAR_LIENS,
@@ -21,6 +24,7 @@ import { set } from 'mongoose';
 const LeadState = props => {
   const initialState = {
    liens: [],
+   leads: [],
    lien:{},
    lead:{},
    call: {},
@@ -31,8 +35,6 @@ const LeadState = props => {
   
 
   const getCall = async () => {
-
-
      
     const call = await axios.get('/api/leads/calls');
     
@@ -41,17 +43,13 @@ const LeadState = props => {
     const { formatted_customer_phone_number , callid } = currentCall
 
     const number = formatted_customer_phone_number
-     
-   
-  
+    
     dispatch({
       type: GET_CALL,
       payload: number
     });  
 
 }
-
-
 
   const addLead = async lead => {
     const config = {
@@ -61,24 +59,19 @@ const LeadState = props => {
     };
 
 
-      const res = await axios.post('/api/leads', lead, config);
+      const res = await axios.post('/api/leads/', lead, config);
 
       dispatch({
         type: POST_LEAD,
         payload: res.data
       });
-
-
   };
-
-  
-
-
-
      // Clear Liens
      const clearLead = () => {
       dispatch({ type: CLEAR_LEAD });
     };
+
+
     const clearNumber = () => {
       dispatch({ type: CLEAR_NUMBER });
     };
@@ -118,41 +111,57 @@ const LeadState = props => {
     dispatch({ type: SET_CURRENT, payload: lien });
   };
 
-  const getLead = async () => {
+  const getLead = async _id => {
   
-    const res = await axios.get('/api/leads/');
+    const res = await axios.get(`/api/leads/${_id}`);
     
-    const [currentLead] = res.data
-    
-
-   
-  
     dispatch({
       type: GET_LEAD,
-      payload: currentLead
+      payload: res.data
     });  
+  }
+
+
+  const getLeads = async text => {
+  
+    const res = await axios.get(`/api/leads?q=${text}`);
+  
+    const leads = res.data 
+  
+    
+    dispatch({
+      type: GET_LEADS,
+      payload: leads
+    });  
+    
+    console.log(leads);
+    
   }
 
   const postLogics = async lead => {
     const config = {
       headers: {
 
-         'Authorization':'Basic mgray@nattaxexperts.com|qw12as34'
-            
+         'Authorization':'Basic mgray@nattaxexperts.com|qw12as34',
+         'Content-Type': 'null'
           }
       };
     
-    
-    getLead(lead);
 
+    //getLead(lead);
+     
+
+
+    setAuthToken(null);
+    
     const {record, call, open, notes}  = lead
 
-    const { name, address, city, state, zip, plaintiff, amount } = record
+  const { name, address, city, state, zip, plaintiff, amount } = record
     const { phone } = call
     const { email, lexId, compliant, filingStatus, cpa, ssn } = open
     const { note } = notes
 
-    const res = await axios.post(`https://nattax.irslogics.com/postLead.aspx?FNAME=${name}&&ADDRESS=${address}&&CITY=${city}&&ZIP=${zip}&&TAX_RELIEF_TAX_AMOUNT=${amount}&&CELL_PHONE=${phone}&&EMAIL=${email}&&NOTES="${plaintiff}"`, config)
+    const res = await axios.post(`https://nte.irslogics.com/postLead.aspx?FNAME=${name}&&ADDRESS=${address}&&CITY=${city}&&ZIP=${zip}&&TAX_RELIEF_TAX_AMOUNT=${amount}&&CELL_PHONE=${phone}&&EMAIL=${email}&&NOTES=${plaintiff}`, config)
     
     console.log(record);
     
@@ -161,6 +170,8 @@ const LeadState = props => {
       type: POST_LOGICS,
       payload: res.data
     });
+
+
 
   }
     // Clear Liens
@@ -173,6 +184,8 @@ const LeadState = props => {
       value={{
         liens: state.liens,
         lien: state.lien,
+        leads: state.leads,
+        lead: state.lead,
         number: state.number,
         searchLiens,
         clearLiens,
@@ -182,8 +195,9 @@ const LeadState = props => {
         setLien,
         clearLead,
         clearNumber,
-        getLead,
-        postLogics
+        postLogics,
+        getLeads,
+        getLead
 
 
       }}

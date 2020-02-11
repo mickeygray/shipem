@@ -1,7 +1,7 @@
 
 import React, { useContext, useEffect  } from 'react';
 import LienItem from './LienItem';
-import LeadContext from '../../context/Lead/leadContext';
+import LeadContext from '../../context/lead/leadContext';
 
 const Liens = () => {
   

@@ -2,6 +2,7 @@ import {
     POST_LEAD,
     GET_CALL,
     GET_LEAD,
+    GET_LEADS,
     UPDATE_LIEN,
     SET_CURRENT,
     CLEAR_LEAD,
@@ -34,6 +35,11 @@ import {
               ...state,
               lead: action.payload
           }; 
+        case GET_LEADS:
+          return {
+            ...state,
+            leads: action.payload
+          }  
       case SET_CURRENT:
         return {
             ...state,

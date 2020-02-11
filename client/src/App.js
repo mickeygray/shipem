@@ -6,19 +6,19 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Alerts from './components/layout/Alerts';
 import PrivateRoute from './components/routing/PrivateRoute';
-
+import Lead from './components/leads/Lead';
 import AuthState from './context/auth/AuthState';
-import LienState from './context/contact/LienState';
 import AlertState from './context/alert/AlertState';
 import CallState from './context/call/CallState';
-import LeadState from './context/Lead/LeadState';
+import LeadState from './context/lead/LeadState';
 import './App.css';
+import ShipEm from './components/pages/ShipEm';
+import Stacks from './components/pages/Stacks';
 
 
 const App = () => {
   return (
     <AuthState> 
-      <LienState>
        <CallState> 
        <LeadState>
         <AlertState>
@@ -29,6 +29,9 @@ const App = () => {
                 <Alerts />
                 <Switch>
                   <PrivateRoute exact path='/' component={Home} />
+                  <PrivateRoute exact path='/shipem' component={ShipEm} />
+                  <PrivateRoute exact path='/stacks' component={Stacks} />
+                  <Route exact path='/lead/:id'  component={Lead} />
                   <Route exact path='/register' component={Register} />
                   <Route exact path='/login' component={Login} />
                 </Switch>
@@ -38,7 +41,6 @@ const App = () => {
          </AlertState>   
          </LeadState>
        </CallState>
-      </LienState>
       </AuthState>
   );
 };

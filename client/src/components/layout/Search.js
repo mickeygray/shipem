@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import LeadContext from '../../context/Lead/leadContext';
+import LeadContext from '../../context/lead/leadContext';
 import AlertContext from '../../context/alert/alertContext';
 
 const Search = () => {
@@ -15,6 +15,7 @@ const Search = () => {
       alertContext.setAlert('Please enter something', 'light');
     } else {
       leadContext.searchLiens(text);
+      leadContext.getLeads(text);
       setText('');
     }
   };

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/auth/authContext";
 
-const Navbar = ({ title }) => {
+const Navbar = () => {
 	const authContext = useContext(AuthContext);
 
 	const { isAuthenticated, logout, user } = authContext;
@@ -16,10 +16,15 @@ const Navbar = ({ title }) => {
 		<Fragment>
 			<li>Hello {user && user.name}</li>
 			<li>
+			<Link to='/ShipEm'>Ship Em!</Link>
+			<Link to='/Stacks'>Stacks!</Link>
+				
+				
 				<a href='#!' onClick={onLogout}>
 					<i className='fa fa-sign-out' />{" "}
 					<span className='hide-sm'>Logout</span>
 				</a>
+				
 			</li>
 		</Fragment>
 	);
@@ -38,7 +43,7 @@ const Navbar = ({ title }) => {
 	return (
 		<div className='navbar bg-primary'>
 			<h2 >
-			<span className='text-dark'>Ship</span><span className='text-danger lead'>'Em</span>	
+			<span className='text-dark'>NTE</span><span className='text-danger lead'>NET</span>	
 			</h2>
 			<ul>{isAuthenticated ? authLinks : guestLinks}</ul>
 		</div>

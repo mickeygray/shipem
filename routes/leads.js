@@ -48,24 +48,34 @@ router.post( '/calls', auth, async (req,res,next) => {
    router.get ('/calls', auth, async (req,res,next) => {
       const call = await Call.find().limit(1).sort({$natural:-1})
       
-
-      
       res.json(call);
 
    })
 
-   router.get ('/', auth, async (req,res,next) => {
-    const lead = await Lead.find().limit(1).sort({$natural:-1})
-    
-
-    
+   router.get ('/:id', auth, async (req,res) => {
+    console.log(req);
+    const lead = await Lead.findById(req.params.id);
+      
     res.json(lead);
   
  })
 
+ router.get ('/', auth, async (req,res) => {
+  console.log(req.query.q);
+
+  const regex = new RegExp(`${req.query.q}`,'gi')
+  const leads = await Lead.find({name:regex});
+ 
+ 
+  res.json(leads);
+  console.log(leads);
+
+})
+
+
 
   
-router.post( '/',auth, async (req,res) => {
+router.post( '/', auth, async (req,res) => {
     
  const { name, address, city, state, zip, plaintiff, amount, lienid } = req.body.record
  const { phone, callid } = req.body.call

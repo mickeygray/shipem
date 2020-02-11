@@ -1,21 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import LeadContext from '../../context/Lead/leadContext';
-import { POST_LOGICS } from '../../context/types';
-
-
-
-
-
-
-
+import LeadContext from '../../context/lead/leadContext';
 
 
 
 const LeadForm = () => {
    
   const leadContext = useContext(LeadContext);
-
-
 
   const { clearLiens, lien, setLien, number, clearNumber, addLead, postLogics } = leadContext;
   
@@ -120,8 +110,8 @@ const LeadForm = () => {
 
   const onSubmit = e => {
       e.preventDefault();
-      addLead(lead);
-      postLogics(lead);
+     addLead(lead);
+     postLogics(lead);
       clearAll();
     };  
 
@@ -141,7 +131,7 @@ const LeadForm = () => {
     <form onSubmit={onSubmit} >
 
       <h2 className='text-danger text-center'>
-     Opener's Interview
+         Ship Em!
       </h2>
 
     <div className="container grid-2">

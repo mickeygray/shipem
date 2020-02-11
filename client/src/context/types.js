@@ -19,11 +19,11 @@ export const FILTER_CALLS = 'FILTER_CALLS';
 //Item List Gets
 export const GET_LIENS = 'GET_LIENS';
 export const GET_CALLS = 'GET_CALLS';
-
+export const GET_LEADS = 'GET_CALLS';
 
 export const GET_NUMBER = 'GET_NUMBER';
 export const GET_CALL = 'GET_CALL';
-export const GET_LEAD = 'GET_LEAD';
+export const GET_LEAD = 'GET_LEADS';
 
 export const CLEAR_CURRENT = 'CLEAR_CURRENT';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
