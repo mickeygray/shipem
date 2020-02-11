@@ -9,6 +9,15 @@ import {
   CLEAR_FILTER
 } from '../types';
 
+let callRailKey;
+
+
+if (process.env.NODE_ENV !== 'production') {
+  callRailKey = process.env.REACT_APP_CALL_RAIL_KEY;
+} else {
+  callRailKey = process.env.REACT_APP_CALL_RAIL_KEY;
+};
+
 const CallState = props => {
     const initialState = {
       calls: [],
@@ -19,9 +28,13 @@ const CallState = props => {
 const [state, dispatch] = useReducer(CallReducer, initialState);
 
 const getCalls = async () => {
+  
+
+  
   const config = {
+      
       headers: {
-            'Authorization': 'Token token=6c0dbe4e525e0bff243007882b40eb2b'
+            'Authorization': `Token token=${callRailKey}`
             
           }
       };

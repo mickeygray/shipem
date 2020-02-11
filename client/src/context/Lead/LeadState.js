@@ -19,7 +19,18 @@ import {
   CLEAR_NUMBER,
   POST_LOGICS
 } from '../types';
-import { set } from 'mongoose';
+
+let logicsId;
+let logicsPw;
+
+if (process.env.NODE_ENV !== 'production') {
+  logicsId = process.env.REACT_APP_LOGICS_ID;
+  logicsPw = process.env.REACT_APP_LOGICS_PW;
+} else {
+  logicsId = process.env.REACT_APP_LOGICS_ID;
+  logicsPw = process.env.REACT_APP_LOGICS_PW;
+};
+
 
 const LeadState = props => {
   const initialState = {
@@ -142,7 +153,7 @@ const LeadState = props => {
     const config = {
       headers: {
 
-         'Authorization':'Basic mgray@nattaxexperts.com|qw12as34',
+         'Authorization':`Basic ${logicsId}|${logicsPw}`,
          'Content-Type': 'null'
           }
       };
@@ -156,12 +167,12 @@ const LeadState = props => {
     
     const {record, call, open, notes}  = lead
 
-  const { name, address, city, state, zip, plaintiff, amount } = record
+    const { name, address, city, state, zip, plaintiff, amount } = record
     const { phone } = call
     const { email, lexId, compliant, filingStatus, cpa, ssn } = open
     const { note } = notes
 
-    const res = await axios.post(`https://nte.irslogics.com/postLead.aspx?FNAME=${name}&&ADDRESS=${address}&&CITY=${city}&&ZIP=${zip}&&TAX_RELIEF_TAX_AMOUNT=${amount}&&CELL_PHONE=${phone}&&EMAIL=${email}&&NOTES=${plaintiff}`, config)
+    const res = await axios.post(`https://nattax.irslogics.com/postLead.aspx?FNAME=${name}&&ADDRESS=${address}&&CITY=${city}&&ZIP=${zip}&&TAX_RELIEF_TAX_AMOUNT=${amount}&&CELL_PHONE=${phone}&&EMAIL=${email}&&NOTES=${plaintiff}`, config)
     
     console.log(record);
     
