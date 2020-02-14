@@ -116,6 +116,10 @@ img {
   margin: .2rem 0;
 }
 
+.card p {
+  font-size:.7rem
+}
+
 /* List */
 .list {
   margin: 0.5rem 0;
@@ -198,13 +202,31 @@ img {
 }
 .grid-3 {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1rem;
+}
+
+.grid-5 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 1rem;
 }
 
 .grid-4 {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
+  grid-gap: 1rem;
+}
+
+.grid-6 {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr ;
+  grid-gap: 1rem;
+}
+
+.grid-5 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 1fr;
   grid-gap: 1rem;
 }
 
@@ -303,7 +325,7 @@ img {
 .bg-white,
 .badge-white,
 .alert-white {
-  background: #fff;
+  background: #ffff00;
   color: #333;
   border: #ccc solid 1px;
 }
@@ -335,10 +357,17 @@ input {
 input[type='text'],
 input[type='email'],
 input[type='password'],
-input[type='date'],
 select{
-  display: block;
+  display: inline;
   width: 12rem;
+  padding: 0.2rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+}
+
+input[type='date']{
+  display: inline-block;
+  width: 9rem;
   padding: 0.2rem;
   font-size: 1rem;
   border: 1px solid #ccc;

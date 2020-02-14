@@ -51,8 +51,30 @@ const LeadSchema = mongoose.Schema({
         type:String
     },
     notes:{
-        type:String
-    }         
+        type:[]
+    },
+    tasks: {
+        type:[]
+    },
+    createdate:{
+        type:Date,
+        default: Date.now() 
+    },
+    claimedBy:{
+        type:{type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+    },
+    createdBy:{
+        type:{type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+    },
+    isClaimed:{
+        default: false
+    },
+    isClosed:{
+        default: false
+    },
+    isPaid:{
+        default: false
+    }                  
 
 });
 

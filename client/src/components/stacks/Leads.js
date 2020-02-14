@@ -1,4 +1,3 @@
-
 import React, { useContext, useEffect  } from 'react';
 import LeadItem from './LeadItem';
 import LeadContext from '../../context/lead/leadContext';
@@ -8,17 +7,17 @@ const Leads = () => {
   const leadContext = useContext(LeadContext);
   
   const { getLeads, leads } = leadContext;
-  
-  useEffect(() => {
+ 
 
-  }, [leadContext, getLeads]);
+  
+
+
+
 
 return (
   <div style={leadStyle}>
    
-  
-  {leads !== [] ? leads.map((lead => <LeadItem key={lead._id} lead={lead}/>)) : 'Search For Something'}
-  
+  {leads.map((lead => <LeadItem key={lead._id} lead={lead}/>))} 
   
   </div>
   );

@@ -7,12 +7,12 @@ import LeadContext from '../../context/lead/leadContext';
 const CallItem = ({call:{answered, first_call, formatted_customer_name, total_calls, source_name, formatted_customer_phone_number,  customer_city, customer_name, customer_phone_number, customer_state, start_time, id, tracking_phone_number }}) => {
        const callid = id
        const call = {answered, first_call, formatted_customer_name, total_calls, source_name, formatted_customer_phone_number,  customer_city, customer_name, customer_phone_number, customer_state, start_time, callid, tracking_phone_number };
-
+       const { setCall } = useContext(LeadContext);
        const { sendCall } = useContext(CallContext);
-       const { getCall, number } = useContext(LeadContext);
+       const number = formatted_customer_phone_number
        const onClick = e => {
            sendCall(call);
-           getCall(number);
+           setCall(number);
        }
 
 

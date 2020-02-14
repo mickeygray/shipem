@@ -2,6 +2,7 @@ import React, { Fragment, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/auth/authContext";
+import RecentLeads from '../stacks/RecentLeads';
 
 const Navbar = () => {
 	const authContext = useContext(AuthContext);
@@ -18,6 +19,7 @@ const Navbar = () => {
 			<li>
 			<Link to='/ShipEm'>Ship Em!</Link>
 			<Link to='/Stacks'>Stacks!</Link>
+			<Link to='/leads/'>Popkis!</Link>
 				
 				
 				<a href='#!' onClick={onLogout}>
@@ -40,13 +42,22 @@ const Navbar = () => {
 		</Fragment>
 	);
 
+ 
+
 	return (
-		<div className='navbar bg-primary'>
+	<div>
+	<div className='navbar bg-primary'>
 			<h2 >
 			<span className='text-dark'>NTE</span><span className='text-danger lead'>NET</span>	
 			</h2>
 			<ul>{isAuthenticated ? authLinks : guestLinks}</ul>
+		    
 		</div>
+		<span className='leadul bg-light'>	{isAuthenticated ? <RecentLeads /> : ''} </span>
+		</div>	
+		
+		
+
 	);
 };
 

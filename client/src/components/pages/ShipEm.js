@@ -1,8 +1,8 @@
 import React  from 'react';
-import Search from '../layout/Search';
-import Filter from '../layout/Filter';
-import Liens from '../liens/Liens';
-import LeadForm from '../leads/LeadForm';
+import LiensSearch from '../shipem/LiensSearch';
+import Filter from '../calls/CallFilter';
+import Liens from '../shipem/Liens';
+import LeadForm from '../shipem/LeadForm';
 import Calls from '../calls/Calls';
 
 
@@ -11,7 +11,7 @@ const ShipEm = () => {
         <div className="grid-3">
             <div className='card' >
             <h3 className='text-danger'> Search By Address </h3>   
-                <Search />
+                <LiensSearch />
                 <Liens />
             </div>
             

@@ -53,7 +53,7 @@ router.post( '/calls', auth, async (req,res,next) => {
    })
 
    router.get ('/:id', auth, async (req,res) => {
-    console.log(req);
+   // console.log(req);
     const lead = await Lead.findById(req.params.id);
       
     res.json(lead);
@@ -61,14 +61,13 @@ router.post( '/calls', auth, async (req,res,next) => {
  })
 
  router.get ('/', auth, async (req,res) => {
-  console.log(req.query.q);
-
+  
   const regex = new RegExp(`${req.query.q}`,'gi')
   const leads = await Lead.find({name:regex});
  
  
   res.json(leads);
-  console.log(leads);
+
 
 })
 
@@ -76,12 +75,11 @@ router.post( '/calls', auth, async (req,res,next) => {
 
   
 router.post( '/', auth, async (req,res) => {
-    
- const { name, address, city, state, zip, plaintiff, amount, lienid } = req.body.record
- const { phone, callid } = req.body.call
- const { email, lexId, compliant, filingStatus, cpa, ssn } = req.body.open
- const { notes } = req.body.notes  
+  console.log(req.user.id);  
+ const { name, address, city, state, zip, plaintiff, amount, lienid, phone, callid, email, lexId, compliant, filingStatus, cpa, ssn, notes  } = req.body
 
+ let createdate 
+ const openerid = JSON.stringify(req.user.id);
 
   const newLead = new Lead({
     name,
@@ -100,14 +98,29 @@ router.post( '/', auth, async (req,res) => {
     filingStatus,
     cpa,
     ssn,
-    notes
+    notes,
+    createdate,
+    isClaimed,
+    isClosed,
+    isPaid
   });
 
  const lead = await newLead.save();
  
  res.json(lead);
-
+ console.log(lead);
   }
 );
 
+/*
+router.get ('/', auth, async (req,res) => {
+    
+//  console.log(req.body)
+  
+  const lead = await Lead.find().limit(1).sort({$natural:-1})
+  
+  res.json(lead);
+
+})
+*/
   module.exports = router;

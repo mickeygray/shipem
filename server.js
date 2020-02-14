@@ -10,11 +10,7 @@ connectDB();
 // Init Middleware
 app.use(express.json({ extended: false }));
 
-app.all('/', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Auth-Token");
-  next()
-});
+app.use(express.static(__dirname + '/public'));
 
 // Define Routes
 app.use('/api/users', require('./routes/users'));

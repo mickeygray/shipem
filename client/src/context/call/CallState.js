@@ -38,7 +38,7 @@ const getCalls = async () => {
             
           }
       };
-      const res = await axios.get(`https://api.callrail.com/v3/a/423787543/calls.json?fields=answered,first_call,formatted_customer_name,total_calls,source_name,formatted_customer_phone_number,customer_city,customer_name,customer_phone_number,customer_state,start_time,id,tracking_phone_number`, config)
+      const res = await axios.get(`https://api.callrail.com/v3/a/423787543/calls.json?fields=answered,first_call,formatted_customer_name,duration,recording_player,start_time,total_calls,source_name,formatted_customer_phone_number,customer_city,customer_name,customer_phone_number,customer_state,start_time,id,tracking_phone_number`, config)
       
       dispatch({
           type: GET_CALLS,

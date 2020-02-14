@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import LeadContext from '../../context/lead/leadContext';
 import AlertContext from '../../context/alert/alertContext';
 
-const Search = () => {
+const LiensSearch = () => {
   const leadContext = useContext(LeadContext);
   const alertContext = useContext(AlertContext);
   
@@ -15,7 +15,7 @@ const Search = () => {
       alertContext.setAlert('Please enter something', 'light');
     } else {
       leadContext.searchLiens(text);
-      leadContext.getLeads(text);
+     
       setText('');
     }
   };
@@ -28,7 +28,7 @@ const Search = () => {
         <input
           type='text'
           name='text'
-          placeholder='Search Liens...'
+          placeholder='Search...'
           value={text}
           onChange={onChange}
         />
@@ -43,4 +43,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default LiensSearch;

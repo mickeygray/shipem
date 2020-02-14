@@ -1,16 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, } from 'react';
 import LeadContext from '../../context/lead/leadContext';
 import { Link } from 'react-router-dom';
 
 
-const LeadItem = ({lead:{name, plaintiff, amount, phone, email, _id, compliant, filingStatus, cpa }}) => {
-
-
+const LeadItem = ({lead}) => {
+    const {name, plaintiff, address, city, state, zip, amount, phone, email, _id, compliant, filingStatus, cpa, notes, tasks, closerid, lexId, ssn, isClaimed, isClosed, isPaid } = lead
+    
+    
+    const match = lead  
     const leadContext = useContext(LeadContext);
 
-    const { getLead } = leadContext;
+    const { getLead, setRecent, text } = leadContext;
+        
+
     const onClick = e =>{
         getLead(_id);
+        setRecent(match);
     }
 
         
@@ -18,7 +23,7 @@ const LeadItem = ({lead:{name, plaintiff, amount, phone, email, _id, compliant, 
         
         <div className="card bg-white">
                 
-        <h5> <span>{name}</span> <span style={{ float: 'right' }}> <Link to={`/lead/${_id}`} onClick={onClick} className='btn btn-dark btn-sm my-1'>View Lead</Link></span> </h5>    
+        <h5> <span>{name}</span> <span style={{ float: 'right' }}> <Link to={`/leads/${_id}`} onClick={onClick} className='btn btn-dark btn-sm my-1'>View Lead</Link></span> </h5>    
                 
                 
                 <div className="leadul">    

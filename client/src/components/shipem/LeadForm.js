@@ -1,10 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, Fragment } from 'react';
 import LeadContext from '../../context/lead/leadContext';
+import setAuthToken from '../../utils/setAuthToken';
+import AuthContext from '../../context/auth/authContext';
+
 
 
 
 const LeadForm = () => {
-   
+  const authContext = useContext(AuthContext);
   const leadContext = useContext(LeadContext);
 
   const { clearLiens, lien, setLien, number, clearNumber, addLead, postLogics } = leadContext;
@@ -38,6 +41,14 @@ const LeadForm = () => {
       setCall({phone:''});
     }
   },[number, leadContext]);
+  
+  const { token } = authContext;
+  
+  useEffect(()=>{
+    if(token === null) {
+      setAuthToken(token)
+    }
+  },[token,authContext])
 
   const [ record, setRecord ] = useState({
     name: '',
@@ -69,20 +80,21 @@ const LeadForm = () => {
     notes: ''});
 
 
-  const { name, address, city, state, zip, plaintiff, amount, lienid } = record
-  const { phone, callid } = call
-  const { email, lexId, compliant, filingStatus, cpa, ssn } = open
-  const { noteSpace } = notes
-  const lead = {record, call, open, notes}
-
-
   const onChange = e => {
     setRecord({...name, address, city, state, zip, plaintiff, amount, [e.target.name]: e.target.value });
     setCall({...phone, [e.target.name]: e.target.value });
     setOpen({...email, lexId, compliant, filingStatus, cpa, ssn, [e.target.name]: e.target.value});
     setNotes({...noteSpace, [e.target.name]: e.target.value });
   }
-
+  
+  const { name, address, city, state, zip, plaintiff, amount, lienid } = record
+  const { phone, callid } = call
+  const { email, lexId, compliant, filingStatus, cpa, ssn } = open
+  const { noteSpace } = notes
+  
+  const lead = {phone, callid, name, address, city, state, zip, plaintiff, amount, lienid, email, lexId, compliant, filingStatus, cpa, ssn, noteSpace }
+  
+  
   const clearLead = () => {
     setNotes('');
     clearNumber();
@@ -110,8 +122,7 @@ const LeadForm = () => {
 
   const onSubmit = e => {
       e.preventDefault();
-     addLead(lead);
-     postLogics(lead);
+      postLogics(lead);
       clearAll();
     };  
 
@@ -120,7 +131,9 @@ const LeadForm = () => {
       clearLead();
     };
 
-
+  const onClick = e => {
+    addLead(lead);
+  }
   
 
 
@@ -128,12 +141,21 @@ const LeadForm = () => {
 
   return (
   
+    <Fragment>
+     <p className='text-center' >
+        <strong className='text-danger  large'>Ship Em!</strong>  <span style={{float: 'right'}}>        
+         <button
+          className='btn btn-sm btn-success'
+          value='save'
+          onClick={onClick}
+        > Save </button>
+         </span>
+      </p>
+
     <form onSubmit={onSubmit} >
 
-      <h2 className='text-danger text-center'>
-         Ship Em!
-      </h2>
-
+ 
+              
     <div className="container grid-2">
     <div className="card">
   
@@ -297,6 +319,7 @@ onChange={onChange}
           className='btn btn-danger btn-block'
           value='Ship Em!'
         
+        
         />
       </div>
       <div>
@@ -307,6 +330,7 @@ onChange={onChange}
         />
       </div>
     </form>
+    </Fragment>
   );
 }
 

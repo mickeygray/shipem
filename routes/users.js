@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const auth = require('../middleware/auth');
 const config = require('config');
 const { check, validationResult } = require('express-validator/check');
 
@@ -72,5 +73,11 @@ router.post(
     }
   }
 );
+
+router.put('/:id', auth, async (req,res) => { 
+
+  console.log(req.params);
+  
+})
 
 module.exports = router;

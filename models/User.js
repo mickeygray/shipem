@@ -19,6 +19,8 @@ const UserSchema = mongoose.Schema({
     date: {
         type: Date,
         default:Date.now
+    },prevLeads: {
+        type:[]
     }
 });
 
