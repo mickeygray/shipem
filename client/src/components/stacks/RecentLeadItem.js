@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import LeadContext from '../../context/lead/leadContext';
+import LeadContext from '../../context/Lead/leadContext';
 import { Link } from 'react-router-dom';
 import { SET_RECENT } from '../../context/types';
 

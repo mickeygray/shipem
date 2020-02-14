@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import CallContext from '../../context/call/callContext';
-import LeadContext from '../../context/lead/leadContext';
+import LeadContext from '../../context/Lead/leadContext';
 
 
 

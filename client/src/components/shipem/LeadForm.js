@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, Fragment } from 'react';
-import LeadContext from '../../context/lead/leadContext';
+import LeadContext from '../../context/Lead/leadContext';
 import setAuthToken from '../../utils/setAuthToken';
 import AuthContext from '../../context/auth/authContext';
 

@@ -1,10 +1,10 @@
-import React, { useReducer, useContext } from 'react';
+import React, { useReducer, useContext } from './node_modules/react';
 import LeadContext from './leadContext';
 import LeadReducer from './leadReducer';
-import axios from 'axios';
+import axios from './node_modules/axios';
 import AuthContext from '../auth/authContext';
 import setAuthToken from '../../utils/setAuthToken'
-import { createBrowserHistory } from "history";
+import { createBrowserHistory } from "./node_modules/history";
 
 import {
   SET_CALLS,

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import LeadsSearch from '../stacks/LeadsSearch';
 import Leads from '../stacks/Leads';
-import LeadContext from '../../context/lead/leadContext';
+import LeadContext from '../../context/Lead/leadContext';
 
 
 

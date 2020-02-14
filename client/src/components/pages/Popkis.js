@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState }  from 'react';
-import LeadContext from '../../context/lead/leadContext';
+import LeadContext from '../../context/Lead/leadContext';
 import AuthContext from '../../context/auth/authContext';
 
 

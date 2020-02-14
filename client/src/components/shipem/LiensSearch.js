@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import LeadContext from '../../context/lead/leadContext';
+import LeadContext from '../../context/Lead/leadContext';
 import AlertContext from '../../context/alert/alertContext';
 
 const LiensSearch = () => {
