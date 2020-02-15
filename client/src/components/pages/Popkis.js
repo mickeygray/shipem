@@ -147,6 +147,7 @@ useEffect(() => {
    
 return (
   <div>
+   <h3 className='text-danger'>Popkis!</h3>
   <div className= 'navbar all-center' >
  <ul >
  <li><button className='btn-success btn-sm btn' >Claim</button></li> 
