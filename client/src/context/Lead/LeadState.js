@@ -11,7 +11,7 @@ import {
   GET_LEAD,
   GET_LEADS,
   SET_LIEN,
-  SET_CALL,
+  LET_CALL,
   SEARCH_LIENS,
   CLEAR_LIENS,
   POST_LEAD,
@@ -46,6 +46,7 @@ const LeadState = props => {
    call: {},
    calls:[],
    text: '',
+   number: null,
    recentLeads: [],
   };
 
@@ -128,9 +129,9 @@ const setRecentLead = recentLead => {
   };
   
   // Set Call in Ship Em Form
-  const setCall = number => {
-
-    dispatch({ type: SET_CALL, payload: number });
+  const letCall = number => {
+    
+    dispatch({ type: LET_CALL, payload: number });
   };
 
   
@@ -170,8 +171,7 @@ const setRecentLead = recentLead => {
 
      const recentLeads =  prevLeads.filter(distinct).filter(e => typeof e !== 'string');
      const recentRoutes = prevLeads.filter(distinct).filter(e => typeof e !== 'object');
-     console.log(recentLeads);
-     console.log(recentRoutes);
+
      dispatch({
       type: SET_RECENT,
       payload: recentLeads
@@ -194,8 +194,7 @@ const setRecentLead = recentLead => {
       payload: leads
     });  
     
-    console.log(res.data)
-    console.log(leads)
+
     
   }
 
@@ -217,8 +216,7 @@ const setRecentLead = recentLead => {
       payload: leads
     });  
     
-    console.log(res.data)
-    console.log(leads)
+
     
   }
 /*
@@ -306,6 +304,7 @@ const setRecentLead = recentLead => {
         lead: state.lead,
         call: state.call,
         calls: state.calls,
+        number: state.number,
         recentLeads: state.recentLeads,
         searchLiens,
         clearLiens,
@@ -320,7 +319,7 @@ const setRecentLead = recentLead => {
         setRecentLead,
         clearLeadFields,
         clearRecentLead,
-        setCall,
+        letCall,
         setCalls,
         getMyLeads
 

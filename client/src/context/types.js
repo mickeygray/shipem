@@ -43,4 +43,4 @@ export const CLEAR_RECENTLEAD ='CLEAR_RECENTLEAD'
 export const LIEN_ERROR = 'LIEN_ERROR';
 export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
-export const SET_CALL = 'SET_CALL';
+export const LET_CALL = 'LET_CALL';

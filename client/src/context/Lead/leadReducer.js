@@ -5,7 +5,7 @@ import {
     GET_LEADS,
     CLEAR_LEAD,
     SET_LIEN,
-    SET_CALL,
+    LET_CALL,
     SEARCH_LIENS,
     DELETE_LIEN,
     CLEAR_LIENS,
@@ -71,7 +71,7 @@ import {
             ...state,
             lien: action.payload
         };
-      case SET_CALL:
+      case LET_CALL:
           return {
               ...state,
               number: action.payload

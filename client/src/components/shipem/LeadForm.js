@@ -62,8 +62,7 @@ const LeadForm = () => {
   });
 
   const [ call, setCall ] = useState({
-        phone: '',
-        callid:''});
+        phone: ''});
   
 
 
@@ -88,11 +87,11 @@ const LeadForm = () => {
   }
   
   const { name, address, city, state, zip, plaintiff, amount, lienid } = record
-  const { phone, callid } = call
+  const { phone } = call
   const { email, lexId, compliant, filingStatus, cpa, ssn } = open
   const { noteSpace } = notes
   
-  const lead = {phone, callid, name, address, city, state, zip, plaintiff, amount, lienid, email, lexId, compliant, filingStatus, cpa, ssn, noteSpace }
+  const lead = {phone, name, address, city, state, zip, plaintiff, amount, lienid, email, lexId, compliant, filingStatus, cpa, ssn, noteSpace }
   
   
   const clearLead = () => {

@@ -47,9 +47,11 @@ const Login = props => {
    <h1>
      Account <span className='text-danger'>Login</span>
    </h1>
+   <br/>
    <form onSubmit={onSubmit}>
      <div className='form-group'>
        <label htmlFor='email'>Email Address</label>
+       <br/>
        <input
          id='email'
          type='email'
@@ -61,6 +63,7 @@ const Login = props => {
      </div>
      <div className='form-group'>
        <label htmlFor='password'>Password</label>
+       <br/>
        <input
          id='password'
          type='password'
