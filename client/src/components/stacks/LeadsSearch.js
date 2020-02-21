@@ -48,51 +48,7 @@ const onChange = e => setText(e.target.value);
         </div>  
 
        
-        <div className='card'>
-       <p>Start <span style={{float:'right'}}>End</span> </p>
-       {'  '}
-       <input
-          type='date'
-          name='date'
-   
-        />{'  '}
-          {'  '}
-        <input
-          type='date'
-          name='date'
-          style={{float:'right'}}
-
-        />
-        <br />
-        <input
-          type='submit'
-          value='Search Date Range'
-          className='btn-white btn-sm btn all-center'
-        />
-</div>
-         
-  <div className='card'>  
-        <input
-        type='radio'
-        name='Lead'
-        value='isClaimed'
-        checked={isClaimed === 'false'} 
-      />{' '}
-      Lead {' '}
-      <input
-        type='radio'
-        name='Client'
-        value='isClosed'
-        checked={isClosed === 'true' && isPaid === 'false'}
-      />{' '}
-      Client
-   <br />
-      <input
-          type='submit'
-          value='Unclaimed'
-          className='btn-danger btn-sm btn py-3'
-        />
-  </div>
+       
       </form>
 
     </div>
