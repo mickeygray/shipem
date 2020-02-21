@@ -26,6 +26,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.8.9",
     "react-data-sort": "^1.2.1",
+    "react-datepicker": "^2.12.1",
     "react-json-to-csv": "^1.0.4",
     "react-router-dom": "^5.1.2"
   },

@@ -20,8 +20,19 @@ const UserSchema = mongoose.Schema({
         type: Date,
         default:Date.now
     },prevLeads: {
-        type:[]
-    }
+        type:Array
+    },leads:{
+        type:Array
+    },tasks:{
+        type:Array
+    },reminders:[
+        {
+            id:{type: String}, 
+            reminderText:{type: String}, 
+            clientName:{type: String}, 
+            clientId:{type: mongoose.Schema.Types.ObjectId} 
+        }
+    ]
 });
 
 module.exports = mongoose.model('user', UserSchema);

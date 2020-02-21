@@ -1,17 +1,21 @@
 import React, { useContext, useEffect } from 'react'
 import LeadContext from '../../context/Lead/leadContext';
+import UserContext from '../../context/user/userContext';
 import RecentLeadItem from './RecentLeadItem';
 
 
 const RecentLeads = () => {
 
   const leadContext = useContext(LeadContext);
+  const userContext = useContext(UserContext);
 
-  const { setRecent, recentLeads, setLead } = leadContext;
-  
+
+
+  const { setRecent, recentLeads } = userContext
+   
   useEffect(() => {
 
-}, [leadContext, setRecent, setLead]);
+}, [setRecent,recentLeads,userContext]);
 
     return (
         <div> 

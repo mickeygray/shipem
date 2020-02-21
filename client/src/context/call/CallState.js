@@ -6,7 +6,8 @@ import {
   GET_CALLS,
   SEND_CALL,
   FILTER_CALLS,
-  CLEAR_FILTER
+  CLEAR_FILTER,
+  GET_LEADCALLS
 } from '../types';
 
 let callRailKey;
@@ -22,14 +23,13 @@ const CallState = props => {
     const initialState = {
       calls: [],
       call: {},
-      filtered: null
+      filtered: null,
+      leadCalls: [],
     };
 
 const [state, dispatch] = useReducer(CallReducer, initialState);
 
 const getCalls = async () => {
-  
-
   
   const config = {
       
@@ -46,6 +46,45 @@ const getCalls = async () => {
       });
 }; 
 
+
+const getLeadCalls = async number => {
+  
+  const config = {
+      
+      headers: {
+            'Authorization': `Token token=${callRailKey}`
+            
+          }
+      };
+      const res = await axios.get(`https://api.callrail.com/v3/a/423787543/calls.json?search=${number}&&fields=formatted_duration,recording_player,total_calls,formatted_customer_phone_number,created_at,id`, config)
+      
+      const leadCalls = res.data.calls
+
+      dispatch({
+          type: GET_LEADCALLS,
+          payload: leadCalls
+      });
+       
+      console.log(leadCalls);
+}; 
+
+
+const setNumber = (phone,phone2,phone3) => {
+   let number
+
+   if(phone) {
+     number = phone
+   } else if (phone2) {
+     number = phone2
+   } else if (phone3) {
+     number = phone3
+   }
+
+  console.log(number);
+
+  getLeadCalls(number);
+
+}
 
 
 const sendCall = async call => {
@@ -79,10 +118,13 @@ const clearFilter = () => {
             calls: state.calls,
             call: state.call,
             filtered: state.filtered,
+            leadCalls: state.leadCalls,
             getCalls,
             sendCall,
             filterCalls,
-            clearFilter
+            clearFilter,
+            getLeadCalls,
+            setNumber
 
     
     

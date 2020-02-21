@@ -15,8 +15,9 @@ const Navbar = () => {
 
 	const authLinks = (
 		<Fragment>
-			<li>Hello {user && user.name}</li>
+			
 			<li>
+			<Link to='/'>Danger Zone!</Link>
 			<Link to='/ShipEm'>Ship Em!</Link>
 			<Link to='/Stacks'>Stacks!</Link>
 			<Link to='/leads/'>Popkis!</Link>

@@ -4,7 +4,9 @@ import LeadReducer from './leadReducer';
 import axios from 'axios';
 import AuthContext from '../auth/authContext';
 import setAuthToken from '../../utils/setAuthToken'
-import { createBrowserHistory } from "history";
+import uuidv4 from 'uuid/v4'
+
+
 
 import {
   SET_CALLS,
@@ -18,11 +20,14 @@ import {
   CLEAR_LEAD,
   CLEAR_NUMBER,
   POST_LOGICS,
-  SET_RECENT,
+  UPDATE_LEAD,
   CLEAR_LEADFIELDS,
   CLEAR_RECENTLEAD,
-  SET_RECENTLEAD
+  SET_RECENTLEAD,
+  SET_NOTES,
+  SET_NOTE
 } from '../types';
+
 
 
 let logicsId;
@@ -37,6 +42,7 @@ if (process.env.NODE_ENV !== 'production') {
 };
 
 
+
 const LeadState = props => {
   const initialState = {
    liens: [],
@@ -45,8 +51,11 @@ const LeadState = props => {
    lead:{},
    call: {},
    calls:[],
+   note:{},
+   notes:[],
    text: '',
    number: null,
+   claimedBy: 'unclaimed',
    recentLeads: [],
   };
 
@@ -72,17 +81,31 @@ const LeadState = props => {
         'Content-Type': 'application/json'
       }
     };
+    
+      const { phone, name, address, city, state, zip, plaintiff, amount, lienid, email, lexId, compliant, filingStatus, cpa, ssn, noteText } = lead
+      
 
+      const noteId = uuidv4();
+  
+      const notes = [{ id : noteId,
+                       note : noteText,
+                       notePostedBy: ''
+                    }]  
 
-      const res = await axios.post('/api/leads/', lead, config);
+      const steve = {phone, name, address, city, state, zip, plaintiff, amount, lienid, email, lexId, compliant, filingStatus, cpa, ssn, notes }
+      console.log(lead,'1');
+      console.log(steve,'1');
+      const res = await axios.post('/api/leads/', steve, config);
 
       dispatch({
         type: POST_LEAD,
         payload: res.data
       });
 
-      
   };
+  
+  
+
 
 
 
@@ -104,7 +127,68 @@ const LeadState = props => {
       dispatch({ type: CLEAR_NUMBER });
     };
 
+   
+    
+   const { user } = useContext(AuthContext);
 
+   
+   const setClaim = async (user,lead) => {
+    
+    const _id = lead._id
+    const claimedBy  = user.name;
+    const isClaimed = true
+    const leadFields = {claimedBy, isClaimed}
+
+    updateLead(leadFields, _id);
+    
+
+  };
+
+  const putNote = async (noteSpace1,user,lead) => {
+    
+    const _id = lead._id
+    const noteId = uuidv4();
+ 
+    const note =  { id : noteId,
+                     note : JSON.stringify(noteSpace1),
+                     notePostedBy: user.name
+                  }
+
+    
+    
+    const leadFields = {note}
+    
+    updateLead(leadFields, _id);
+    
+  };
+
+  const setApproved = async (lead) => {
+    
+    const _id = lead._id
+    const isApproved = true
+    const leadFields = {isApproved}
+
+    updateLead(leadFields, _id);
+    
+
+  };
+
+
+  const setUnclaim = async (user,lead) => {
+    
+    const _id = lead._id
+    const claimedBy  = 'unclaimed';
+    const isClaimed = false
+    const leadFields = {claimedBy, isClaimed}
+
+    updateLead(leadFields, _id);
+    
+ 
+  };
+  
+
+   
+   
   //Search Liens
   const searchLiens = async text => {
 
@@ -124,10 +208,18 @@ const setRecentLead = recentLead => {
 };
 
   // Set Lien in Ship Em Form
-  const setLien = lien => {
+
+    const setLien = lien => {
     dispatch({ type: SET_LIEN, payload: lien });
   };
-  
+
+  const setNotes = notes => {
+    dispatch({ type: SET_NOTES, payload: notes });
+  };
+
+  const setNote = note => {
+    dispatch({ type: SET_NOTE, payload: note });
+  };
   // Set Call in Ship Em Form
   const letCall = number => {
     
@@ -137,47 +229,21 @@ const setRecentLead = recentLead => {
   
   // get id and set name id value pair for recent array
 
-  const { user } = useContext(AuthContext);
-
   const getLead = async _id => {
-  
     const res = await axios.get(`/api/leads/${_id}`);
 
     dispatch({
         type: GET_LEAD,
         payload: res.data
       });  
+     
 
+      
+  
+    
     }
   
-  
-    //populates lead form from recently viewed case
-    const setRecent = match => {
-      const prevLeads = user.prevLeads
-      const history = createBrowserHistory(getLead);  
-      const prevLead = history.location.pathname.slice(6);
-
-      
-
-      const setPrevious = () =>{
-         return prevLeads.push(prevLead); 
-      }  
-
-       const [...spliceLeads] = prevLeads.splice(0,1,match,match);
-       
-       const distinct =  (value, index, self) => {
-         return self.indexOf(value) === index;
-       }
-
-     const recentLeads =  prevLeads.filter(distinct).filter(e => typeof e !== 'string');
-     const recentRoutes = prevLeads.filter(distinct).filter(e => typeof e !== 'object');
-
-     dispatch({
-      type: SET_RECENT,
-      payload: recentLeads
-    });  
-      
-  }  
+ 
       // Lead Seach in stacks
   const getLeads = async text => { 
     const config = {
@@ -214,11 +280,9 @@ const setRecentLead = recentLead => {
     dispatch({
       type: GET_LEADS,
       payload: leads
-    });  
-    
-
-    
+    });    
   }
+
 /*
   const searchLeadDates = async text => { 
     
@@ -267,6 +331,31 @@ const setRecentLead = recentLead => {
   }
 */
 
+ // Update Lead
+ const updateLead = async (leadFields, _id)=> {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  try {
+    const res = await axios.put(
+      `/api/leads/${_id}`,
+      leadFields,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_LEAD,
+      payload: res.data
+    });
+
+  } catch (err) {
+    console.log(err)
+  }
+};
+
 
    //post to logics
   const postLogics = async lead => {
@@ -303,9 +392,10 @@ const setRecentLead = recentLead => {
         leads: state.leads,
         lead: state.lead,
         call: state.call,
+        note: state.note,
+        notes: state.notes,
         calls: state.calls,
         number: state.number,
-        recentLeads: state.recentLeads,
         searchLiens,
         clearLiens,
         addLead,
@@ -315,13 +405,18 @@ const setRecentLead = recentLead => {
         postLogics,
         getLeads,
         getLead,
-        setRecent,
         setRecentLead,
         clearLeadFields,
         clearRecentLead,
         letCall,
         setCalls,
-        getMyLeads
+        updateLead,
+        setClaim,
+        setUnclaim,
+        setApproved,
+        setNotes,
+        setNote,
+        putNote
 
       }}
     >

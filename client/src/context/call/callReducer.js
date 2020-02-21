@@ -2,7 +2,8 @@ import {
     GET_CALLS,
     SEND_CALL,
     FILTER_CALLS,
-    CLEAR_FILTER
+    CLEAR_FILTER,
+    GET_LEADCALLS
   } from '../types';
 
   export default (state,action) => {
@@ -12,6 +13,11 @@ import {
             ...state,
             calls: action.payload
         };
+        case GET_LEADCALLS:
+          return {
+              ...state,
+              leadCalls: action.payload
+          };  
       case SEND_CALL:
         return {
           ...state,

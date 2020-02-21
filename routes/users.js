@@ -76,8 +76,34 @@ router.post(
 
 router.put('/:id', auth, async (req,res) => { 
 
-  console.log(req.params);
+  const [reminder] =  req.body 
+  const reminders = []
+  const userFields = {}; 
+
+  if (reminders) userFields.reminders = reminders;
+
+  try {
+    
+    let user = await User.findById(req.params.id);
+
+   if(reminder) {
+
   
-})
+     user = await User.findByIdAndUpdate(
+       req.params.id,
+       { $push: { reminders : reminder }},
+       { 'new': true }
+     )
+  
+  }
+    res.json(user);
+    
+    console.log(user);
+
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 
 module.exports = router;

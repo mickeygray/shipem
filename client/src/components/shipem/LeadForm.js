@@ -1,17 +1,18 @@
 import React, { useContext, useEffect, useState, Fragment } from 'react';
 import LeadContext from '../../context/Lead/leadContext';
-import setAuthToken from '../../utils/setAuthToken';
-import AuthContext from '../../context/auth/authContext';
+
 
 
 
 
 const LeadForm = () => {
-  const authContext = useContext(AuthContext);
+
   const leadContext = useContext(LeadContext);
 
-  const { clearLiens, lien, setLien, number, clearNumber, addLead, postLogics } = leadContext;
+  const { clearLiens, lien, setLien, letCall, number, clearNumber, addLead, postLogics } = leadContext;
   
+  
+
   useEffect(() => {
     
     if (lien !== null) {
@@ -42,14 +43,6 @@ const LeadForm = () => {
     }
   },[number, leadContext]);
   
-  const { token } = authContext;
-  
-  useEffect(()=>{
-    if(token === null) {
-      setAuthToken(token)
-    }
-  },[token,authContext])
-
   const [ record, setRecord ] = useState({
     name: '',
     address:'',
@@ -65,37 +58,51 @@ const LeadForm = () => {
         phone: ''});
   
 
-
-  const [ open, setOpen] = useState({
+  const [ open, setOpen ] = useState({
        email:'',
        lexId:'',
        compliant:'filed',
-       filingStatus:'m',
+       filingStatus:'married',
        cpa: 'cpa',
-       ssn:''
+       ssn:'',
+       noteText:''
   });
-
-  const [ notes, setNotes ] = useState({
-    notes: ''});
 
 
   const onChange = e => {
+    const { name, value } = e.target;
+
+    if (Object.keys(record).includes(name)) {
+        setRecord(prev => ({...prev, [name]: value}));
+    }
+    if (Object.keys(call).includes(name)) {
+      setCall(prev => ({...prev, [name]: value}));
+    }  
+    if (Object.keys(open).includes(name)) {
+      setOpen(prev => ({...prev, [name]: value}));
+    }         
+    
+  }
+
+
+
+/*
+  const onChange = e => {
     setRecord({...name, address, city, state, zip, plaintiff, amount, [e.target.name]: e.target.value });
     setCall({...phone, [e.target.name]: e.target.value });
-    setOpen({...email, lexId, compliant, filingStatus, cpa, ssn, [e.target.name]: e.target.value});
-    setNotes({...noteSpace, [e.target.name]: e.target.value });
+    setOpen({...email, lexId, compliant, filingStatus, cpa, ssn, noteText, [e.target.name]: e.target.value});
   }
-  
+*/
   const { name, address, city, state, zip, plaintiff, amount, lienid } = record
   const { phone } = call
-  const { email, lexId, compliant, filingStatus, cpa, ssn } = open
-  const { noteSpace } = notes
+  const { email, lexId, compliant, filingStatus, cpa, ssn, noteText } = open
+
   
-  const lead = {phone, name, address, city, state, zip, plaintiff, amount, lienid, email, lexId, compliant, filingStatus, cpa, ssn, noteSpace }
-  
+
+  const lead = {phone, name, address, city, state, zip, plaintiff, amount, lienid, email, lexId, compliant, filingStatus, cpa, ssn, noteText }
+
   
   const clearLead = () => {
-    setNotes('');
     clearNumber();
     setLien('');
     setRecord({
@@ -109,19 +116,22 @@ const LeadForm = () => {
     });
     setCall({
       phone: ''});
+
     setOpen({
         email:'',
         lexId:'',
         compliant:'filed',
         filingStatus:'m',
-        cpa: 'cpa'
+        cpa: 'cpa',
+        noteText:'',
+        ssn:''
    });  
 
   }
 
   const onSubmit = e => {
       e.preventDefault();
-      postLogics(lead);
+      addLead(lead);
       clearAll();
     };  
 
@@ -131,7 +141,7 @@ const LeadForm = () => {
     };
 
   const onClick = e => {
-    addLead(lead);
+    letCall(number);
   }
   
 
@@ -158,9 +168,9 @@ const LeadForm = () => {
     <div className="container grid-2">
     <div className="card">
   
-      <input
+    <input
         type='text'
-        placeholder='Name'
+        placeholder='name'
         name='name'
         value={name}
         onChange={onChange}
@@ -242,7 +252,7 @@ const LeadForm = () => {
     <input
         type='text'
         placeholder='Lex Id'
-        name='lexid'
+        name='lexId'
         value={lexId}
         onChange={onChange}
       />
@@ -271,16 +281,16 @@ const LeadForm = () => {
         className=''
         type='radio'
         name='filingStatus'
-        value='m'
-        checked={filingStatus === 'm'}
+        value='married'
+        checked={filingStatus === 'married'}
         onChange={onChange}
       />{' '}Married{'   '}
  
     <input
         type='radio'
         name='filingStatus'
-        value='s'
-        checked={filingStatus === 's'}
+        value='single'
+        checked={filingStatus === 'single'}
         onChange={onChange}
       />{' '}Single{'   '}
 </div>
@@ -304,8 +314,9 @@ const LeadForm = () => {
 </div>  
 <div className='card all-center'>
 <textarea
-value={noteSpace}
+value={noteText}
 placeholder='notes'
+name='noteText'
 onChange={onChange}
 /></div>
 

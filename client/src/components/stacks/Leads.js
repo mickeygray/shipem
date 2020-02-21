@@ -9,10 +9,6 @@ const Leads = () => {
   const { getLeads, leads } = leadContext;
  
 
-  
-
-
-
 
 return (
   <div style={leadStyle}>

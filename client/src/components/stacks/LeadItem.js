@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, } from 'react';
 import LeadContext from '../../context/Lead/leadContext';
+import UserContext from '../../context/user/userContext';
 import { Link } from 'react-router-dom';
 
 
@@ -9,9 +10,10 @@ const LeadItem = ({lead}) => {
     
     const match = lead  
     const leadContext = useContext(LeadContext);
+    const userContext = useContext(UserContext);
 
-    const { getLead, setRecent, text } = leadContext;
-        
+    const { getLead } = leadContext;
+    const { setRecent }  = userContext;   
 
     const onClick = e =>{
         getLead(_id);

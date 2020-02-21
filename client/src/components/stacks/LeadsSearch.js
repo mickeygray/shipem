@@ -1,13 +1,16 @@
 import React, { useContext, useState } from 'react';
 import LeadContext from '../../context/Lead/leadContext';
 import AlertContext from '../../context/alert/alertContext';
+import UserContext from '../../context/user/userContext';
 
 const LeadsSearch = () => {
   const leadContext = useContext(LeadContext);
   const alertContext = useContext(AlertContext);
+  const userContext = useContext(UserContext);
   
 
-  const { getLeads, getMyLeads, isClaimed, isClosed, isPaid} = leadContext
+  const { getLeads, isClaimed, isClosed, isPaid} = leadContext
+  const { getMyLeads } = userContext
 
   const [text, setText] = useState('');
 
@@ -44,19 +47,7 @@ const onChange = e => setText(e.target.value);
         />
         </div>  
 
-        <div className='card'>   
-               <input
-          type='text'
-          name='text'
-          placeholder='Search...' 
-        />
-        <input
-          type='submit'
-          value='My Leads'
-          className='btn-success btn-sm btn'
-          onClick={()=>getMyLeads(text)}
-        />
-        </div>
+       
         <div className='card'>
        <p>Start <span style={{float:'right'}}>End</span> </p>
        {'  '}

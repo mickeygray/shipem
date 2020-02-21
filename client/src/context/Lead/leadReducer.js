@@ -10,13 +10,16 @@ import {
     DELETE_LIEN,
     CLEAR_LIENS,
     CLEAR_NUMBER,
+    SET_NOTES,
     POST_LOGICS,
     GET_FIELDS,
     POST_PREV,
     SET_RECENT,
     SET_RECENTLEAD,
     CLEAR_LEADFIELDS,
-    CLEAR_RECENTLEAD
+    CLEAR_RECENTLEAD,
+    UPDATE_LEAD,
+    SET_NOTE
   } from '../types';
 
   export default (state,action) => {
@@ -30,7 +33,12 @@ import {
           return {
               ...state,
               recentLeads: action.payload
-          }; 
+          };
+          case SET_NOTE:
+            return {
+                ...state,
+                note: action.payload
+            };     
       case POST_PREV:
         return {
             ...state,
@@ -51,6 +59,12 @@ import {
               ...state,
               recentLead : action.payload
           };
+          case SET_NOTES:
+            return {
+                ...state,
+                notes: action.payload
+            };    
+
         case GET_LEAD:
           return {
               ...state,
@@ -113,7 +127,14 @@ import {
              return {
                 ...state,
                 liens: []                    
-            };            
+            }; 
+    case UPDATE_LEAD:
+      return {
+        ...state,
+        leads: state.leads.map(lead =>
+          lead._id === action.payload._id ? action.payload : lead
+        )
+      };               
        
       default: 
        return state;

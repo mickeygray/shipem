@@ -109,6 +109,13 @@ img {
   text-align: center;
 }
 
+.center {
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 /* Cards */
 .card {
   padding: 1rem;
@@ -189,12 +196,36 @@ img {
   margin: 0 3rem;
 }
 
+.mx-1 {
+  margin: 0rem 2rem 0rem 0rem;
+}
+
 /* Grid */
 .grid-2 {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 1rem;
   
+}
+
+.grid-2a {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  
+}
+
+.grid-1 {
+  display: grid;
+  grid-gap: 1rem;
+  
+}
+
+.leadStatus {
+  background-color: #333;
+  color: #f4f4f4;
+  font-size: 1rem;
+  width: 15rem;
+
 }
 
 .leaditem {
@@ -206,11 +237,6 @@ img {
   grid-gap: 1rem;
 }
 
-.grid-5 {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 1rem;
-}
 
 .grid-4 {
   display: grid;
@@ -223,6 +249,15 @@ img {
   grid-template-columns: 1fr 2fr 1fr ;
   grid-gap: 1rem;
 }
+
+label {
+  font-size: .7rem;
+  font-weight: bold;
+  margin: 0px;
+  padding: 0px;
+  text-align: right;
+
+ }
 
 .grid-5 {
   display: grid;
@@ -345,7 +380,7 @@ img {
 
 /* Forms */
 input {
-  margin: 1rem 0;
+  margin: .3rem 0;
 }
 
 .form-text {
@@ -381,9 +416,12 @@ input[type='date']{
 textarea {
   display: block;
   width: 30rem;
+  height: 10rem;
   padding: 0.2rem;
   font-size: 1rem;
   border: 1px solid #ccc;
+  resize: none;
+  overflow-y:scroll;
 }
 
 
@@ -460,6 +498,10 @@ table th {
 
   .lead {
     font-size: 1rem;
+  }
+
+  .reminder {
+    font-size: .8rem;
   }
 
   /* Navbar */
