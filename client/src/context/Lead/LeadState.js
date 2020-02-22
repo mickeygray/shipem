@@ -25,7 +25,8 @@ import {
   CLEAR_RECENTLEAD,
   SET_RECENTLEAD,
   SET_NOTES,
-  SET_NOTE
+  SET_NOTE,
+  DELETE_NOTE
 } from '../types';
 
 
@@ -57,6 +58,7 @@ const LeadState = props => {
    number: null,
    claimedBy: 'unclaimed',
    recentLeads: [],
+   todaysLeads:[]
   };
 
   const [state, dispatch] = useReducer(LeadReducer, initialState);
@@ -88,13 +90,12 @@ const LeadState = props => {
       const noteId = uuidv4();
   
       const notes = [{ id : noteId,
-                       note : noteText,
+                       noteText : noteText,
                        notePostedBy: ''
                     }]  
 
       const steve = {phone, name, address, city, state, zip, plaintiff, amount, lienid, email, lexId, compliant, filingStatus, cpa, ssn, notes }
-      console.log(lead,'1');
-      console.log(steve,'1');
+
       const res = await axios.post('/api/leads/', steve, config);
 
       dispatch({
@@ -145,12 +146,12 @@ const LeadState = props => {
   };
 
   const putNote = async (noteSpace1,user,lead) => {
-    
+    console.log(user)
     const _id = lead._id
     const noteId = uuidv4();
  
-    const note =  { id : noteId,
-                     note : JSON.stringify(noteSpace1),
+    const note =  {  id : noteId,
+                     noteText : JSON.stringify(noteSpace1),
                      notePostedBy: user.name
                   }
 
@@ -192,7 +193,7 @@ const LeadState = props => {
   //Search Liens
   const searchLiens = async text => {
 
-    const res = await axios.get(`/api/liens?name=${text}`);
+    const res = await axios.get(`/api/liens?q=${text}`);
     
 
     dispatch({
@@ -226,6 +227,34 @@ const setRecentLead = recentLead => {
     dispatch({ type: LET_CALL, payload: number });
   };
 
+  const deleteNote = async (note,lead) => {
+  
+    const { _id } = lead
+    const { id } = note
+  
+
+   
+  
+    const config = {
+      params: {
+      _id : _id
+      },
+      data:{
+        id:id
+      }
+    };
+    console.log(_id);
+    console.log(id);
+  
+    await axios.delete(`/api/leads/${_id}`,config);
+       
+     
+      dispatch({
+        type: DELETE_NOTE,
+        payload: lead
+      });
+
+  };
   
   // get id and set name id value pair for recent array
 
@@ -235,12 +264,7 @@ const setRecentLead = recentLead => {
     dispatch({
         type: GET_LEAD,
         payload: res.data
-      });  
-     
-
-      
-  
-    
+      });     
     }
   
  
@@ -393,6 +417,7 @@ const setRecentLead = recentLead => {
         lead: state.lead,
         call: state.call,
         note: state.note,
+        todaysLeads: state.todaysLeads,
         notes: state.notes,
         calls: state.calls,
         number: state.number,
@@ -416,7 +441,8 @@ const setRecentLead = recentLead => {
         setApproved,
         setNotes,
         setNote,
-        putNote
+        putNote,
+        deleteNote
 
       }}
     >

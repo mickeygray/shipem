@@ -7,7 +7,7 @@ import {
     SET_LIEN,
     LET_CALL,
     SEARCH_LIENS,
-    DELETE_LIEN,
+    DELETE_NOTE,
     CLEAR_LIENS,
     CLEAR_NUMBER,
     SET_NOTES,
@@ -116,13 +116,13 @@ import {
                 liens: action.payload
               
             };
-        case DELETE_LIEN:
-                return {
-                  ...state,
-                  liens: state.liens.filter(
-                    lien => lien._id !== action.payload
-                  )
-                };
+        case DELETE_NOTE:
+            return {
+                ...state,
+                notess: state.notes.filter(
+                  note => note._id !== action.payload
+                )
+            };      
         case CLEAR_LIENS:
              return {
                 ...state,

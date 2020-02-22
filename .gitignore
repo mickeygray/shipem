@@ -9,6 +9,7 @@ node_modules/
 /client/.env.development.local
 /client/.env.test.local
 /client/.env.production.local
+/client/jsxelements.txt
 
 npm-debug.log*
 yarn-debug.log*

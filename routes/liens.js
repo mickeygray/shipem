@@ -11,8 +11,16 @@ const config = require('config');
 
 router.get('/', auth, async (req,res) => {
 
-       const regex = new RegExp(`${req.query.name}`,'gi')
-       const liens = await Lien.find({address:regex});
+     const regex = new RegExp(`${req.query.q}`,'gi')
+       const liens = await Lien.find({
+        $or:[
+          {name:regex},
+          {address:regex},
+          {lexId:regex},
+          {amount:regex}
+        ]
+      }
+  );
        res.json(liens);
 
 });

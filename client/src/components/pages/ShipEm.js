@@ -10,7 +10,7 @@ const ShipEm = () => {
     return (
         <div className="grid-3">
             <div className='card' >
-            <h3 className='text-danger'> Search By Address </h3>   
+            <h5 className='text-danger'> Name, Address, Amount, PinCode </h5>   
                 <LiensSearch />
                 <Liens />
             </div>

@@ -8,7 +8,10 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 
 //Crud Types
+export const DELETE_NOTE = 'DELETE_NOTE';
+export const DELETE_REMINDER = 'DELETE_REMINDER';
 export const DELETE_LIEN = 'DELETE_LIEN';
+export const DELETE_RECENTLEAD = 'DELETE_RECENTLEAD';
 export const UPDATE_LEAD = 'UPDATE_LEAD';
 export const SET_RECENTLEAD = 'SET_RECENTLEAD';
 export const SET_LIEN = 'SET_LIEN';

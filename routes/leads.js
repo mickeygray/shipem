@@ -62,9 +62,18 @@ router.post( '/calls', auth, async (req,res,next) => {
  })
 
  router.get ('/', auth, async (req,res) => {
-  
-  const regex = new RegExp(`${req.query.q}`,'gi')
-  const leads = await Lead.find({name:regex});
+ 
+
+    const regex = new RegExp(`${req.query.q}`,'gi')
+    const leads = await Lead.find({
+      $or:[
+        {name:regex},
+        {address:regex},
+        {lexId:regex},
+        {ssn:regex}
+      ]
+    }
+);
  
  
   res.json(leads);
@@ -78,8 +87,6 @@ router.post( '/calls', auth, async (req,res,next) => {
 router.post( '/', auth, async (req,res) => {
   
  const {phone, name, address, city, state, zip, plaintiff, amount, lienid, email, lexId, compliant, filingStatus, cpa, ssn, noteText } = req.body
- 
- console.log(req.body);
  const notes = noteText
  let createdate;
  let name2;
@@ -200,23 +207,10 @@ router.post( '/', auth, async (req,res) => {
 );
 
 
-
-
-
-// @route     PUT api/contacts/:id
-// @desc      Update contact
-// @access    Private
 router.put('/:id', auth, async (req, res) => {
   
-  
-
   const { note, createdBy, claimedBy, isClaimed, isClosed, isPaid, _id, isApproved,name,address,city,state,zip,plaintiff,amount,email,lexId,compliant,filingStatus,cpa,ssn,phone,name2,address2,city2,state2,zip2,employerTime,ssn2,lexId2,dob,dob2,relation,phone2,phone3,email2,email3,prac,problem1,problem2,problem3,resSold,resSold2,home,homePay,wages,income1Type,income1Value,income2Type,income2Value,income3Type,income3Value,otherIncomeType,otherIncomeValue,creditScore,availableCredit,totalCredit,employerName,employerPhone } = req.body;
-
-  // Build contact object
-
   const notes = []
-
-
   const leadFields = {};
   if (notes) leadFields.notes = [notes];
   if (dob) leadFields.dob = dob;
@@ -283,12 +277,6 @@ router.put('/:id', auth, async (req, res) => {
 
     if (!lead) return res.status(404).json({ msg: 'lead not found' });
 
-    // Make sure user owns contact
-   /*
-    if (contact.user.toString() !== req.user.id) {
-      return res.status(401).json({ msg: 'Not authorized' });
-    }
-    */
    if(note){
      lead = await Lead.findByIdAndUpdate(
        req.params.id,
@@ -309,8 +297,26 @@ router.put('/:id', auth, async (req, res) => {
   }
 });
 
-/*
-router.get ('/', auth, async (req,res) => {
+router.delete('/:id', auth, async (req,res) => { 
+  
+  const lead = req.params._id
+  const noteId = req.body.id
+  
+  try {
+  
+  await Lead.findOneAndUpdate({lead:lead,"notes.id":noteId},
+  {$pull:{ "notes" : {"id":noteId},}});
+
+   res.json(lead)
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+
+/* View Today's leads
+router.post ('/today', auth, async (req,res) => {
     
 //  console.log(req.body)
   

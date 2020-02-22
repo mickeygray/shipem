@@ -1,9 +1,4 @@
-import React, { useContext, useEffect, useState }  from 'react';
-import LeadContext from '../../context/Lead/leadContext';
-import AuthContext from '../../context/auth/authContext';
-import AlertContext from '../../context/alert/alertContext';
-import UserContext from '../../context/user/userContext';
-import CallContext from '../../context/call/callContext';
+import React from 'react';
 import LeadCalls from '../calls/LeadCalls';
 import Notes from '../popkis/Notes';
 import NotePad from '../popkis/NotePad'
@@ -26,7 +21,7 @@ return (
 <div className='container'> 
 <PopkisForm/>
 </div>
-<div className='sidebar' style={{height: '100%'}}>
+<div className='sidebar' style={{width: '30rem'}}>
 <div className='card'> 
 <Notes />
 <hr/>

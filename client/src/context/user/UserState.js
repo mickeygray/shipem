@@ -11,6 +11,8 @@ import {
   SET_RECENT,
   GET_LEADS,
   UPDATE_USER,
+  DELETE_REMINDER,
+  DELETE_RECENTLEAD
 } from '../types';
 
 
@@ -62,9 +64,33 @@ console.log(user);
     });     
   }
 
-   // populate my tasks - provide link to popkis associated with task
 
-   // populate my reminders
+   const deleteReminder = async (user,reminder,reminders) => {
+   
+    const { _id } = user
+    const { id } = reminder
+   
+    const config = {
+      params: {
+      _id : _id
+      },
+      data:{
+        id:id
+      }
+    };
+    
+ 
+      
+    await axios.delete(`/api/users/${_id}`,config);
+       
+     
+      dispatch({
+        type: DELETE_REMINDER,
+        payload: user
+      });
+
+  };
+
 
    // prevLeads
 
@@ -93,9 +119,18 @@ console.log(user);
     type: SET_RECENT,
     payload: recentLeads
   });  
-    
+    console.log(recentLeads)
 }  
 
+const deleteRecentLead = (match,recentLeads) => {
+  
+
+  
+  
+ dispatch({ type: DELETE_RECENTLEAD,
+             payload: recentLeads });
+}
+// Push To User Arrays (Leads, Tasks, Reminders)
 const updateUser = async (noteSpace, user, lead)=> {
   const config = {
     headers: {
@@ -149,7 +184,9 @@ const updateUser = async (noteSpace, user, lead)=> {
         getMyLeads,
         setRecent,
         getUserName,
-        updateUser   
+        updateUser,
+        deleteReminder,
+        deleteRecentLead   
         }}>
       {props.children}
     </UserContext.Provider>

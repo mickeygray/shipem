@@ -152,13 +152,7 @@ const LeadForm = () => {
   
     <Fragment>
      <p className='text-center' >
-        <strong className='text-danger  large'>Ship Em!</strong>  <span style={{float: 'right'}}>        
-         <button
-          className='btn btn-sm btn-success'
-          value='save'
-          onClick={onClick}
-        > Save </button>
-         </span>
+        <strong className='text-danger  large'>Ship Em!</strong> 
       </p>
 
     <form onSubmit={onSubmit} >

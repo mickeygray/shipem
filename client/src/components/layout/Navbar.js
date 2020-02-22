@@ -1,26 +1,45 @@
-import React, { Fragment, useContext } from "react";
+import React, { Fragment, useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/auth/authContext";
 import RecentLeads from '../stacks/RecentLeads';
+import UserContext from '../../context/user/userContext';
+import AlertContext from '../../context/alert/alertContext';
+
+
+
 
 const Navbar = () => {
 	const authContext = useContext(AuthContext);
-
+	const { setAlert } = useContext(AlertContext);
 	const { isAuthenticated, logout, user } = authContext;
+  
+    useEffect(()=>{
+		setText('Stacks!')
+	},[])
 
+  
 	const onLogout = () => {
 		logout();
 	};
-
+    const onClick = e =>{
+		if(text === 'Stacks!'){
+		setText('Racks!')
+		}else
+		setText('Stacks!')
+	}
+	
+	const [text, setText] = useState({
+		text:'Stacks!'
+	})
 	const authLinks = (
 		<Fragment>
 			
 			<li>
 			<Link to='/'>Danger Zone!</Link>
 			<Link to='/ShipEm'>Ship Em!</Link>
-			<Link to='/Stacks'>Stacks!</Link>
-			<Link to='/leads/'>Popkis!</Link>
+			<Link to='/Stacks'onClick={onClick}>{text}</Link>
+			<a>Popkis!</a>
 				
 				
 				<a href='#!' onClick={onLogout}>
@@ -50,6 +69,7 @@ const Navbar = () => {
 	<div className='navbar bg-primary'>
 			<h2 >
 			<span className='text-dark'>NTE</span><span className='text-danger lead'>NET</span>	
+		     <span className='text-dark' style={{fontSize:'.8rem'}}>{'      '}{ user ? `Claw their eyes out, ${user.name}` : ''}</span>
 			</h2>
 			<ul>{isAuthenticated ? authLinks : guestLinks}</ul>
 		    
@@ -62,12 +82,4 @@ const Navbar = () => {
 	);
 };
 
-Navbar.prototype = {
-	title: PropTypes.string.isRequired,
-	icon: PropTypes.string
-};
-
-Navbar.defaultProps = {
-	title: "Ship 'Em"
-};
 export default Navbar;

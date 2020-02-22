@@ -9,9 +9,8 @@ const LeadsSearch = () => {
   const userContext = useContext(UserContext);
   
 
-  const { getLeads, isClaimed, isClosed, isPaid} = leadContext
-  const { getMyLeads } = userContext
-
+  const { getLeads } = leadContext
+  
   const [text, setText] = useState('');
 
 
@@ -31,6 +30,7 @@ const onChange = e => setText(e.target.value);
     <div className='container'>
       <form onSubmit={onSubmit} className='grid-5' >
         <div className='card'>
+        <h5 className='text-danger'> Name, Address, Pin Code, SSN </h5>   
         <input
           type='text'
           name='text'

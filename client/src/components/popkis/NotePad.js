@@ -59,7 +59,7 @@ const NotePad = () => {
            <form className='center' >
             <textarea
                 className='center'
-                style={{width:'15rem'}}
+                style={{width: '27rem'}}
                 value={noteSpace1}
                 placeholder='Notes and Reminders'
                 onChange={onChange}

@@ -105,5 +105,27 @@ router.put('/:id', auth, async (req,res) => {
   }
 });
 
+//delete Reminders 
+
+// @route     DELETE api/contacts/:id
+// @desc      Delete contact
+// @access    Private
+router.delete('/:id', auth, async (req,res) => { 
+  
+  const user = req.params._id
+  const reminderId = req.body.id
+  
+  try {
+  
+  await User.findOneAndUpdate({user:user,"reminders.id":reminderId},
+  {$pull:{ "reminders" : {"id":reminderId},}});
+
+   res.json(user)
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 
 module.exports = router;

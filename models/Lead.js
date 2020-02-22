@@ -51,10 +51,14 @@ const LeadSchema = mongoose.Schema({
         type:String
     },
     notes:{
-        type:[]
-    },
-    note:{
-        type:{}
+        type:[
+            {
+                id:{type: String}, 
+                noteText:{type: String}, 
+                notePostedBy:{type:String},
+                noteDate:{type:Date, default:Date.now()}
+            }
+        ]
     },
     tasks: {
         type:[]

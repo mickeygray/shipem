@@ -22,8 +22,8 @@ const Reminders = () => {
  // 
   return (
     <>
-    <div className='sidebar' style={leadStyle}>
-    <div className= 'bg-white'>
+    <div style={leadStyle}>
+    <div className= 'bg-white' style={{height:'5rem'}}>
         <h2 className='text-danger all-center'> My Reminders</h2>
     </div>
     {user ?

@@ -30,7 +30,8 @@ const UserSchema = mongoose.Schema({
             id:{type: String}, 
             reminderText:{type: String}, 
             clientName:{type: String}, 
-            clientId:{type: mongoose.Schema.Types.ObjectId} 
+            clientId:{type: mongoose.Schema.Types.ObjectId},
+            reminderDate:{type:Date, default:Date.now()} 
         }
     ]
 });

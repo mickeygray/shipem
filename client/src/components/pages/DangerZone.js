@@ -4,6 +4,8 @@ import UserContext from '../../context/user/userContext'
 import LeadContext from '../../context/Lead/leadContext'
 import Reminders from '../dangerzone/Reminders'
 import MyLeads from '../dangerzone/MyLeads'
+import Calls from '../calls/Calls'
+import CallFilter from '../calls/CallFilter'
 
 const DangerZone = () => {
  const authContext = useContext(AuthContext);
@@ -14,27 +16,26 @@ const DangerZone = () => {
  const { user } = authContext
  console.log(user); 
     return (
-        <div>
+        <div className='container'>
+           
            <h1 className='text-danger'>Danger Zone!</h1>
-   
-           <div className='card bg-dark' style={{width:'25rem'}}>
-             Hello { user ? user.name : ''}, claw their eyes out... 
-          </div>
          <div className = 'grid-3'>
          
-         <Fragment>
+         <div className='sidebar' style={{width:'15rem'}}>
            <Reminders/>
-         </Fragment>
+        </div>
        
-         <div>
-           Something 
-         </div>
-
          <Fragment>
           <MyLeads/>
          </Fragment>
-         </div>
+         <div className='sidebar' style={{width:'15rem'}}>
+           <h5>Popkis Match</h5>
+           <CallFilter/>
+           <Calls/>
         </div>
+         </div>
+         </div>
+     
     )
 }
 
