@@ -7,7 +7,7 @@ const Notes = ({notes}) => {
   const { lead } = leadContext;
   
   console.log(notes)
-
+  console.log(localStorage)
   return (
     <>
     { lead.notes

@@ -10,15 +10,15 @@ const { addLead, lead, todaysLeads, getLead } = leadContext
 const { isClaimed } = lead
 
 useEffect(()=>{
- if (!todaysLeads){
-  localStorage.setItem('todaysLeads', todaysLeads);
-  
- }else if(todaysLeads.length>2){
-  const distinct =  (value, index, self) => {
-    return self.indexOf(value) === index;}
-  todaysLeads.filter(distinct)
- }
-},[])
+  if (!todaysLeads){
+   localStorage.setItem('todaysLeads', todaysLeads);
+   
+  }else if(todaysLeads.length>2){
+   const distinct =  (value, index, self) => {
+     return self.indexOf(value) === index;}
+   todaysLeads.filter(distinct)
+  }
+ },[])
 
 useEffect(()=>{
  

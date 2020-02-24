@@ -6,7 +6,8 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT,
-    CLEAR_ERRORS
+    CLEAR_ERRORS,
+    LOGIN_REFRESHED
   } from '../types';
   
   export default (state, action) => {
@@ -25,6 +26,14 @@ import {
           ...action.payload,
           isAuthenticated: true
         };
+        case REGISTER_SUCCESS:
+       case LOGIN_REFRESHED:
+            localStorage.setItem('token', action.payload.token);
+            return {
+              ...state,
+              ...action.payload,
+              isAuthenticated: true
+            };
       case REGISTER_FAIL:
       case AUTH_ERROR:
       case LOGIN_FAIL:

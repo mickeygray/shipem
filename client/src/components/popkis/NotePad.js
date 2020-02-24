@@ -45,15 +45,23 @@ const NotePad = () => {
     
     
     const { noteSpace1 } = noteSpace
-
-          
+    
+ 
      
           
     const onChange = e => {
       setNoteSpace({...noteSpace1,  [e.target.name]: e.target.value})
     }         
     
-    
+    const refreshPage = () => {
+      window.location.reload(false);
+    }
+
+    const onClick = e => {
+       putNote(noteSpace,user,lead);
+       refreshPage(false); 
+    }
+  
     return (
         <div>
            <form className='center' >
@@ -65,7 +73,7 @@ const NotePad = () => {
                 onChange={onChange}
             />
 
-            <button className='btn-danger btn-sm btn' onClick={()=>putNote(noteSpace,user,lead)} >Note</button>
+            <button className='btn-danger btn-sm btn' onClick={onClick}>Note</button>
             <button className='btn-danger btn-sm btn' onClick={()=>updateUser(noteSpace,user,lead)}>Reminder</button>
             <button className='btn-light btn-sm btn' >Clear</button>
       

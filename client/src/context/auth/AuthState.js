@@ -3,6 +3,8 @@ import axios from 'axios';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
 import setAuthToken from '../../utils/setAuthToken';
+import { createBrowserHistory } from "history";
+
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -11,7 +13,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  LOGIN_REFRESHED
 } from '../types';
 
 const AuthState = props => {
@@ -65,6 +68,44 @@ const AuthState = props => {
     }
   };
 
+  // persist token
+  const loginRefresh = async  (localStorage, token) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      params: {
+        token:token
+      }
+    };
+    
+   const history  =  createBrowserHistory(localStorage); 
+
+   const myToken = history
+  
+
+   console.log(myToken)
+    
+    if (loadUser){
+    localStorage.setItem('token', localStorage.token);
+    loginRefresh();
+    
+    }else if(localStorage.token === null) {
+    localStorage.getItem(myToken) 
+    localStorage.setItem(token)  
+    };
+
+
+
+    const res = await axios.post('/api/auth',token,config);
+
+    dispatch({
+      type: LOGIN_REFRESHED,
+      payload: res.data
+    });
+
+  }
+
   // Login User
   const login = async formData => {
     const config = {
@@ -80,7 +121,7 @@ const AuthState = props => {
         type: LOGIN_SUCCESS,
         payload: res.data
       });
-
+      
       loadUser();
     } catch (err) {
       dispatch({
@@ -107,7 +148,8 @@ const AuthState = props => {
         loadUser,
         login,
         logout,
-        clearErrors
+        clearErrors,
+        loginRefresh
       }}
     >
       {props.children}
